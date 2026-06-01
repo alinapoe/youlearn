@@ -297,12 +297,29 @@
     const formCard  = document.getElementById('form-card');
     const thankYou  = document.getElementById('thank-you');
 
+    function emailValido(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       errorMsg.style.display = 'none';
+      errorMsg.textContent   = '';
+
       const nombre = document.getElementById('nombre').value.trim();
       const email  = document.getElementById('email').value.trim();
-      if (!nombre || !email) return;
+
+      if (!nombre) {
+        errorMsg.textContent  = 'Por favor ingresá tu nombre.';
+        errorMsg.style.display = 'block';
+        return;
+      }
+      if (!email || !emailValido(email)) {
+        errorMsg.textContent  = 'El email no parece válido. Revisá que tenga @ y un dominio completo (ej: tucorreo@gmail.com).';
+        errorMsg.style.display = 'block';
+        return;
+      }
+
       submitBtn.disabled    = true;
       submitBtn.textContent = 'Enviando...';
       try {
@@ -323,3 +340,4 @@
   </script>
 </body>
 </html>
+
