@@ -349,7 +349,7 @@
 
     /* ── FREEBIE BANNER ── */
     .freebie-banner {
-      background: linear-gradient(135deg, var(--charcoal) 0%, #4a5f6a 100%);
+      background: var(--lavender);
       border-radius: 20px;
       padding: 32px 36px;
       display: flex;
@@ -359,8 +359,8 @@
       margin-bottom: 56px;
       flex-wrap: wrap;
     }
-    .freebie-text h3 { font-size: 1.15rem; font-weight: 800; color: var(--lime); margin-bottom: 6px; }
-    .freebie-text p { font-size: 0.88rem; color: white; opacity: 0.82; max-width: 420px; line-height: 1.5; }
+    .freebie-text h3 { font-size: 1.15rem; font-weight: 800; color: var(--purple); margin-bottom: 6px; }
+    .freebie-text p { font-size: 0.88rem; color: var(--charcoal); opacity: 0.85; max-width: 420px; line-height: 1.5; }
     .btn-freebie {
       display: inline-block;
       background: var(--lime); color: var(--charcoal);
@@ -519,61 +519,12 @@
 
       <!-- FREEBIE -->
       <div class="freebie-banner">
-        <img src="freebie.gif" alt="Recurso gratuito" style="width:72px;height:72px;object-fit:contain;flex-shrink:0;mix-blend-mode:multiply;" />
+        <img src="freebie.gif" alt="Recurso gratuito" style="width:72px;height:72px;object-fit:contain;flex-shrink:0;" />
         <div class="freebie-text">
           <h3>Recurso gratuito</h3>
           <p>Descargá la <strong>Rutina de activación del inglés en tu cerebro</strong> › una plantilla semanal imprimible para que empieces a pensar en inglés y dejes de traducir todo.</p>
         </div>
         <a class="btn-freebie" href="#LINK-FREEBIE" target="_blank" rel="noopener">Descargar gratis</a>
-      </div>
-
-      <!-- EBOOK -->
-      <div class="product-category">
-        <div class="category-header">
-          <span class="category-title">Ebooks</span>
-        </div>
-        <div class="products-grid two-col">
-
-          <div class="product-card">
-            <div class="card-visual card-visual-ebook">
-              <img src="ebook.gif" alt="Ebook" />
-            </div>
-            <div class="card-body">
-              <div class="product-tag">Ebook · Tomo 1</div>
-              <div class="product-name">Present Tenses › Guía completa de los 4 tiempos presentes</div>
-              <div class="price">$22.000</div>
-              <ul class="features">
-                <li>Guía bilingüe (español + inglés)</li>
-                <li>Todos los presentes explicados con ejemplos</li>
-                <li>Actividades + respuestas incluidas</li>
-              </ul>
-              <p class="coming-soon-note">Próximamente: Tomo 2 (Past Tenses) y Tomo 3 (Future Tenses)</p>
-              <div class="card-actions" style="margin-top:16px;">
-                <a class="btn-comprar disabled" href="#">Próximamente</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="product-card">
-            <div class="card-visual card-visual-bundle">
-              <img src="ebook.gif" alt="Ebook + sesión" />
-            </div>
-            <div class="card-body">
-              <div class="product-tag">Pack especial</div>
-              <div class="product-name">Ebook Present Tenses + Sesión de consulta individual (30 min)</div>
-              <div class="price">$40.000</div>
-              <ul class="features">
-                <li>Ebook completo Present Tenses</li>
-                <li>Sesión 1:1 de 30 min con una profe</li>
-                <li>Revisamos tus errores y dudas juntas</li>
-              </ul>
-              <div class="card-actions">
-                <a class="btn-comprar disabled" href="#">Próximamente</a>
-              </div>
-            </div>
-          </div>
-
-        </div>
       </div>
 
       <!-- CLASES INDIVIDUALES -->
@@ -729,6 +680,55 @@
               <div class="card-actions">
                 <a class="btn-comprar" href="#LINK-MP-GRP-12" target="_blank" rel="noopener">Comprar →</a>
                 <a class="btn-secondary" href="#LINK-TEST-NIVEL" target="_blank" rel="noopener">Hacer test de nivel</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- EBOOK -->
+      <div class="product-category">
+        <div class="category-header">
+          <span class="category-title">Ebooks</span>
+        </div>
+        <div class="products-grid two-col">
+
+          <div class="product-card">
+            <div class="card-visual card-visual-ebook">
+              <img src="ebook.gif" alt="Ebook" />
+            </div>
+            <div class="card-body">
+              <div class="product-tag">Ebook · Tomo 1</div>
+              <div class="product-name">Present Tenses › Guía completa de los 4 tiempos presentes</div>
+              <div class="price">$22.000</div>
+              <ul class="features">
+                <li>Guía bilingüe (español + inglés)</li>
+                <li>Todos los presentes explicados con ejemplos</li>
+                <li>Actividades + respuestas incluidas</li>
+              </ul>
+              <p class="coming-soon-note">Próximamente: Tomo 2 (Past Tenses) y Tomo 3 (Future Tenses)</p>
+              <div class="card-actions" style="margin-top:16px;">
+                <a class="btn-comprar disabled" href="#">Próximamente</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="card-visual card-visual-bundle">
+              <img src="ebook.gif" alt="Ebook + sesión" />
+            </div>
+            <div class="card-body">
+              <div class="product-tag">Pack especial</div>
+              <div class="product-name">Ebook Present Tenses + Sesión de consulta individual (30 min)</div>
+              <div class="price">$40.000</div>
+              <ul class="features">
+                <li>Ebook completo Present Tenses</li>
+                <li>Sesión 1:1 de 30 min con una profe</li>
+                <li>Revisamos tus errores y dudas juntas</li>
+              </ul>
+              <div class="card-actions">
+                <a class="btn-comprar disabled" href="#">Próximamente</a>
               </div>
             </div>
           </div>
