@@ -328,7 +328,12 @@
     }
     .features li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
     .coming-soon-note { font-size: 0.76rem; color: var(--purple); opacity: 0.7; font-style: italic; margin-top: 6px; }
-    .transfer-note { font-size: 0.70rem; color: var(--charcoal); opacity: 0.55; text-align: center; margin-top: 8px; line-height: 1.4; }
+    .transfer-note { font-size: 0.70rem; color: var(--charcoal); opacity: 0.55; text-align: center; margin-top: 4px; line-height: 1.4; }
+    .commission-note { font-size: 0.70rem; color: var(--charcoal); opacity: 0.50; text-align: center; margin-top: 4px; margin-bottom: 6px; }
+    .btn-transferir { display: block; text-align: center; background: var(--green); color: white; text-decoration: none; padding: 11px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: opacity 0.2s; }
+    .btn-transferir:hover { opacity: 0.85; }
+    .btn-link-small { display: block; text-align: center; font-size: 0.80rem; color: var(--purple); text-decoration: none; padding: 5px; opacity: 0.65; margin-top: 2px; }
+    .btn-link-small:hover { opacity: 1; text-decoration: underline; }
     .card-actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
     .btn-comprar {
       display: block; text-align: center;
@@ -454,7 +459,7 @@
         <button class="btn-submit" type="submit" id="submit-btn">Enviar →</button>
         <div class="error-msg" id="error-msg"></div>
       </form>
-      <p class="privacy">Sin spam, prometido. Podés darte de baja cuando quieras.</p>
+      <p class="privacy">Sin spam, prometido.<br>Podés darte de baja cuando quieras.</p>
     </div>
 
     <!-- GRACIAS -->
@@ -476,26 +481,17 @@
     <div class="section-inner">
       <span class="section-label">El equipo</span>
       <h2 class="section-title">Conocé a <em>nuestras profes</em></h2>
-      <p class="section-subtitle">Cada una tiene su estilo y especialidad. Encontrá la que mejor se adapta a lo que necesitás.</p>
+      <p class="section-subtitle">Cada una tiene su estilo y especialidad.<br>Encontrá la que mejor se adapta a lo que necesitás.</p>
 
       <div class="profes-grid">
 
         <div class="profe-card">
-          <img class="profe-photo" src="ali.gif" alt="Ali — fundadora de YouLearn" onerror="this.style.display='none'" />
+          <img class="profe-photo" src="ali.gif" alt="Ali — fundadora de YouLearn" onerror="this.style.display='none'" style="width:150px;height:150px;object-fit:cover;object-position:center top;" />
           <div class="profe-name">Ali</div>
           <p class="profe-bio">
             La fundadora de YouLearn. Estudió en Lenguas Vivas SBS de Buenos Aires y es la voz detrás del contenido de redes, el armado de Ebooks y los cursos de fonética. Si tu tema con el inglés es miedo para hablar, una diferencia grande entre lo que entendés y lo que podés decir, o si necesitás ayuda con tus sonidos porque sentís que no estás pronunciando bien, ella es la ideal para vos. También le encanta prepararte para certificar tu nivel con algún examen internacional (FCE, CAE, IELTS, TOEFL).
           </p>
           <a class="btn-agendar" href="https://301.tv/ynppD" target="_blank" rel="noopener">Agendar con Ali →</a>
-        </div>
-
-        <div class="profe-card">
-          <img class="profe-photo" src="sil.gif" alt="Sil — profe de YouLearn" onerror="this.style.display='none'" />
-          <div class="profe-name">Sil</div>
-          <p class="profe-bio">
-            La más apasionada por hacer hablar inglés hasta a lxs más principiantes, además de intérprete English/Spanish, Sil tiene certificación docente CELTA y una vocación docente que se puede ver. Se autodefine como "una migrada que volvió a la patria que llora durante el himno en los actos del cole de su hijo". Ella vivió en USA, Alemania y Brasil, así que te va a hacer hablar como hablan afuera, y te vas a sentir MUY a gusto en clase con ella.
-          </p>
-          <a class="btn-agendar" href="https://wa.me/541565727391" target="_blank" rel="noopener">Agendar con Sil →</a>
         </div>
 
         <div class="profe-card">
@@ -507,6 +503,15 @@
           <a class="btn-agendar" href="https://wa.me/541565727391" target="_blank" rel="noopener">Agendar con Anto →</a>
         </div>
 
+        <div class="profe-card">
+          <img class="profe-photo" src="sil.gif" alt="Sil — profe de YouLearn" onerror="this.style.display='none'" />
+          <div class="profe-name">Sil</div>
+          <p class="profe-bio">
+            La más apasionada por hacer hablar inglés hasta a lxs más principiantes, además de intérprete English/Spanish, Sil tiene certificación docente CELTA y una vocación docente que se puede ver. Se autodefine como "una migrada que volvió a la patria que llora durante el himno en los actos del cole de su hijo". Ella vivió en USA, Alemania y Brasil, así que te va a hacer hablar como hablan afuera, y te vas a sentir MUY a gusto en clase con ella.
+          </p>
+          <a class="btn-agendar" href="https://wa.me/541565727391" target="_blank" rel="noopener">Agendar con Sil →</a>
+        </div>
+
       </div>
     </div>
   </section>
@@ -516,7 +521,7 @@
     <div class="section-inner">
       <span class="section-label">Servicios</span>
       <h2 class="section-title">Todo lo que podés hacer <em>con YouLearn</em></h2>
-      <p class="section-subtitle">Desde recursos para estudiar sola hasta clases con profe. Encontrá lo que mejor encaja con tu momento.</p>
+      <p class="section-subtitle">Desde recursos para estudiar sola hasta clases con profe.<br>Encontrá lo que mejor encaja con tu momento.</p>
 
       <!-- FREEBIE -->
       <div class="freebie-banner">
@@ -546,14 +551,16 @@
               <div class="product-name">4 clases individuales de 55 min</div>
               <div class="price">$116.000</div>
               <ul class="features">
-                <li>55 minutos por clase</li>
+                <li>100% personalizadas</li>
                 <li>Materiales incluidos</li>
                 <li>Agenda directa con tu profe</li>
               </ul>
               <div class="card-actions">
-                <a class="btn-comprar" href="https://link.mercadopago.com.ar/youlearnba" target="_blank" rel="noopener">Comprar →</a>
-                <a class="btn-secondary" href="https://301.tv/ynppD" target="_blank" rel="noopener">Ver disponibilidad</a>
-                <p class="transfer-note">También podés transferir al alias <strong>ALINA.YL</strong> (Banco Galicia)</p>
+                <a class="btn-comprar" href="https://link.mercadopago.com.ar/youlearnba" target="_blank" rel="noopener">Pagar con tarjeta en cuotas →</a>
+                <p class="commission-note">Vía MercadoPago · lleva comisión de MP</p>
+                <a class="btn-transferir" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+al+alias+ALINA.YL+%28Banco+Galicia%29" target="_blank" rel="noopener">Transferir · alias ALINA.YL →</a>
+                <p class="commission-note">Banco Galicia · sin comisión</p>
+                <a class="btn-link-small" href="https://301.tv/ynppD" target="_blank" rel="noopener">Ver disponibilidad</a>
               </div>
             </div>
           </div>
@@ -571,14 +578,16 @@
                 <span class="savings-badge">Ahorrás $22.000</span>
               </div>
               <ul class="features">
-                <li>55 minutos por clase</li>
+                <li>100% personalizadas</li>
                 <li>Materiales incluidos</li>
                 <li>Agenda directa con tu profe</li>
               </ul>
               <div class="card-actions">
-                <a class="btn-comprar" href="https://link.mercadopago.com.ar/youlearnba" target="_blank" rel="noopener">Comprar →</a>
-                <a class="btn-secondary" href="https://301.tv/ynppD" target="_blank" rel="noopener">Ver disponibilidad</a>
-                <p class="transfer-note">También podés transferir al alias <strong>ALINA.YL</strong> (Banco Galicia)</p>
+                <a class="btn-comprar" href="https://link.mercadopago.com.ar/youlearnba" target="_blank" rel="noopener">Pagar con tarjeta en cuotas →</a>
+                <p class="commission-note">Vía MercadoPago · lleva comisión de MP</p>
+                <a class="btn-transferir" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+al+alias+ALINA.YL+%28Banco+Galicia%29" target="_blank" rel="noopener">Transferir · alias ALINA.YL →</a>
+                <p class="commission-note">Banco Galicia · sin comisión</p>
+                <a class="btn-link-small" href="https://301.tv/ynppD" target="_blank" rel="noopener">Ver disponibilidad</a>
               </div>
             </div>
           </div>
@@ -596,14 +605,16 @@
                 <span class="savings-badge">Ahorrás $38.000</span>
               </div>
               <ul class="features">
-                <li>55 minutos por clase</li>
+                <li>100% personalizadas</li>
                 <li>Materiales incluidos</li>
                 <li>Agenda directa con tu profe</li>
               </ul>
               <div class="card-actions">
-                <a class="btn-comprar" href="https://link.mercadopago.com.ar/youlearnba" target="_blank" rel="noopener">Comprar →</a>
-                <a class="btn-secondary" href="https://301.tv/ynppD" target="_blank" rel="noopener">Ver disponibilidad</a>
-                <p class="transfer-note">También podés transferir al alias <strong>ALINA.YL</strong> (Banco Galicia)</p>
+                <a class="btn-comprar" href="https://link.mercadopago.com.ar/youlearnba" target="_blank" rel="noopener">Pagar con tarjeta en cuotas →</a>
+                <p class="commission-note">Vía MercadoPago · lleva comisión de MP</p>
+                <a class="btn-transferir" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+al+alias+ALINA.YL+%28Banco+Galicia%29" target="_blank" rel="noopener">Transferir · alias ALINA.YL →</a>
+                <p class="commission-note">Banco Galicia · sin comisión</p>
+                <a class="btn-link-small" href="https://301.tv/ynppD" target="_blank" rel="noopener">Ver disponibilidad</a>
               </div>
             </div>
           </div>
@@ -634,9 +645,11 @@
                 <li>Test de nivel previo para encontrar tu grupo ideal</li>
               </ul>
               <div class="card-actions">
-                <a class="btn-comprar" href="https://link.mercadopago.com.ar/youlearnba" target="_blank" rel="noopener">Comprar →</a>
-                <a class="btn-secondary" href="#LINK-TEST-NIVEL" target="_blank" rel="noopener">Hacer test de nivel</a>
-                <p class="transfer-note">También podés transferir al alias <strong>ALINA.YL</strong> (Banco Galicia)</p>
+                <a class="btn-comprar" href="https://link.mercadopago.com.ar/youlearnba" target="_blank" rel="noopener">Pagar con tarjeta en cuotas →</a>
+                <p class="commission-note">Vía MercadoPago · lleva comisión de MP</p>
+                <a class="btn-transferir" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+al+alias+ALINA.YL+%28Banco+Galicia%29" target="_blank" rel="noopener">Transferir · alias ALINA.YL →</a>
+                <p class="commission-note">Banco Galicia · sin comisión</p>
+                <a class="btn-link-small" href="#LINK-TEST-NIVEL" target="_blank" rel="noopener">Hacer test de nivel</a>
               </div>
             </div>
           </div>
@@ -659,9 +672,11 @@
                 <li>Test de nivel previo para encontrar tu grupo ideal</li>
               </ul>
               <div class="card-actions">
-                <a class="btn-comprar" href="https://link.mercadopago.com.ar/youlearnba" target="_blank" rel="noopener">Comprar →</a>
-                <a class="btn-secondary" href="#LINK-TEST-NIVEL" target="_blank" rel="noopener">Hacer test de nivel</a>
-                <p class="transfer-note">También podés transferir al alias <strong>ALINA.YL</strong> (Banco Galicia)</p>
+                <a class="btn-comprar" href="https://link.mercadopago.com.ar/youlearnba" target="_blank" rel="noopener">Pagar con tarjeta en cuotas →</a>
+                <p class="commission-note">Vía MercadoPago · lleva comisión de MP</p>
+                <a class="btn-transferir" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+al+alias+ALINA.YL+%28Banco+Galicia%29" target="_blank" rel="noopener">Transferir · alias ALINA.YL →</a>
+                <p class="commission-note">Banco Galicia · sin comisión</p>
+                <a class="btn-link-small" href="#LINK-TEST-NIVEL" target="_blank" rel="noopener">Hacer test de nivel</a>
               </div>
             </div>
           </div>
@@ -684,9 +699,11 @@
                 <li>Test de nivel previo para encontrar tu grupo ideal</li>
               </ul>
               <div class="card-actions">
-                <a class="btn-comprar" href="https://link.mercadopago.com.ar/youlearnba" target="_blank" rel="noopener">Comprar →</a>
-                <a class="btn-secondary" href="#LINK-TEST-NIVEL" target="_blank" rel="noopener">Hacer test de nivel</a>
-                <p class="transfer-note">También podés transferir al alias <strong>ALINA.YL</strong> (Banco Galicia)</p>
+                <a class="btn-comprar" href="https://link.mercadopago.com.ar/youlearnba" target="_blank" rel="noopener">Pagar con tarjeta en cuotas →</a>
+                <p class="commission-note">Vía MercadoPago · lleva comisión de MP</p>
+                <a class="btn-transferir" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+al+alias+ALINA.YL+%28Banco+Galicia%29" target="_blank" rel="noopener">Transferir · alias ALINA.YL →</a>
+                <p class="commission-note">Banco Galicia · sin comisión</p>
+                <a class="btn-link-small" href="#LINK-TEST-NIVEL" target="_blank" rel="noopener">Hacer test de nivel</a>
               </div>
             </div>
           </div>
