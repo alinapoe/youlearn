@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>YouLearn — Desbloqueá tu inglés</title>
-  <meta name="description" content="Hablá inglés tan bien como lo entendés. Dejame tus datos y recibí recursos gratuitos para avanzar con inglés." />
+  <meta name="description" content="Clases de inglés online individuales y grupales, ebooks y recursos gratuitos para desbloquearte de una vez." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -19,241 +19,426 @@
       --lavender: #e5cdf9;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--lavender);
-      color: var(--charcoal);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; color: var(--charcoal); background: white; }
+
     /* ── HEADER ── */
     header {
       background: white;
-      padding: 18px 24px;
+      padding: 14px 24px;
       display: flex;
       align-items: center;
       justify-content: center;
       box-shadow: 0 2px 12px rgba(120,95,179,0.10);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    .logo-img {
-      width: 56px;
-      height: 56px;
-      object-fit: contain;
+    .header-inner {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .logo-wordmark {
-      margin-left: 12px;
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--purple);
-      letter-spacing: -0.5px;
-    }
+    .header-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-img { width: 44px; height: 44px; object-fit: contain; }
+    .logo-wordmark { font-size: 1.4rem; font-weight: 800; color: var(--purple); letter-spacing: -0.5px; }
     .logo-wordmark span { color: var(--green); }
+    .header-nav { display: flex; align-items: center; gap: 24px; }
+    .header-nav a {
+      text-decoration: none;
+      font-size: 0.87rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      transition: color 0.2s;
+    }
+    .header-nav a:hover { color: var(--purple); }
+    .nav-cta {
+      background: var(--purple) !important;
+      color: white !important;
+      padding: 9px 18px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+    }
+    .nav-cta:hover { background: #6a50a3 !important; }
+
     /* ── HERO ── */
     .hero {
-      flex: 1;
+      background: var(--lavender);
+      padding: 60px 24px 80px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 48px 24px 64px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
+    .dots { position: absolute; border-radius: 50%; opacity: 0.18; pointer-events: none; }
+    .dot1 { width: 280px; height: 280px; background: var(--purple); top: -80px; right: -80px; }
+    .dot2 { width: 200px; height: 200px; background: var(--green);  bottom: -60px; left: -60px; }
+    .dot3 { width: 120px; height: 120px; background: var(--yellow); bottom: 120px; right: 40px; }
+    .hero > * { position: relative; z-index: 1; }
     .badge {
       display: inline-block;
       background: var(--yellow);
       color: var(--charcoal);
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 700;
       padding: 6px 16px;
       border-radius: 100px;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       letter-spacing: 0.5px;
       text-transform: uppercase;
     }
     h1 {
-      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-size: clamp(2rem, 5vw, 3rem);
       font-weight: 800;
       line-height: 1.15;
       color: var(--charcoal);
-      max-width: 640px;
-      margin-bottom: 18px;
+      max-width: 620px;
+      margin-bottom: 16px;
     }
-    h1 em {
-      font-style: normal;
-      color: var(--purple);
-    }
+    h1 em { font-style: normal; color: var(--purple); }
     .subtitle {
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      font-size: clamp(0.95rem, 2.5vw, 1.1rem);
       color: var(--charcoal);
       opacity: 0.75;
-      max-width: 480px;
+      max-width: 460px;
       margin-bottom: 40px;
       line-height: 1.6;
     }
-    /* ── CARD FORM ── */
-    .card {
+
+    /* ── FORM CARD ── */
+    .form-card {
       background: white;
       border-radius: 24px;
-      padding: 40px 36px;
+      padding: 36px 32px;
       width: 100%;
-      max-width: 460px;
+      max-width: 440px;
       box-shadow: 0 8px 40px rgba(120,95,179,0.15);
     }
-    .card h2 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--charcoal);
-      margin-bottom: 24px;
-    }
-    .field { margin-bottom: 16px; }
-    label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--charcoal);
-      margin-bottom: 6px;
-    }
-    input[type="text"],
-    input[type="email"] {
+    .form-card h2 { font-size: 1.1rem; font-weight: 700; color: var(--charcoal); margin-bottom: 22px; }
+    .field { margin-bottom: 14px; }
+    label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--charcoal); margin-bottom: 5px; }
+    input[type="text"], input[type="email"] {
       width: 100%;
-      padding: 14px 16px;
+      padding: 13px 15px;
       border: 2px solid var(--lavender);
       border-radius: 12px;
       font-family: 'Poppins', sans-serif;
-      font-size: 1rem;
+      font-size: 0.97rem;
       color: var(--charcoal);
       outline: none;
       transition: border-color 0.2s;
       background: #fafafa;
     }
-    input[type="text"]:focus,
-    input[type="email"]:focus {
-      border-color: var(--purple);
-      background: white;
-    }
-    .btn {
+    input:focus { border-color: var(--purple); background: white; }
+    .btn-submit {
       width: 100%;
-      padding: 16px;
+      padding: 15px;
       background: var(--purple);
       color: white;
       border: none;
       border-radius: 12px;
       font-family: 'Poppins', sans-serif;
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 8px;
+      margin-top: 6px;
       transition: background 0.2s, transform 0.1s;
-      letter-spacing: 0.3px;
     }
-    .btn:hover  { background: #6a50a3; }
-    .btn:active { transform: scale(0.98); }
-    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .privacy {
-      font-size: 0.75rem;
-      color: var(--charcoal);
-      opacity: 0.5;
-      text-align: center;
-      margin-top: 14px;
-    }
-    /* ── ERROR ── */
+    .btn-submit:hover  { background: #6a50a3; }
+    .btn-submit:active { transform: scale(0.98); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .privacy { font-size: 0.72rem; color: var(--charcoal); opacity: 0.5; text-align: center; margin-top: 12px; }
     .error-msg {
       background: #ffe5e5;
       color: #c0392b;
       border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 0.85rem;
-      margin-top: 12px;
+      padding: 9px 13px;
+      font-size: 0.83rem;
+      margin-top: 10px;
       display: none;
     }
+
     /* ── THANK YOU ── */
-    #thank-you {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
+    #thank-you { display: none; flex-direction: column; align-items: center; text-align: center; }
     .checkmark {
-      width: 72px;
-      height: 72px;
+      width: 68px; height: 68px;
       background: var(--lime);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 24px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
     }
-    .checkmark svg { width: 36px; height: 36px; }
-    #thank-you h2 {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--charcoal);
-      margin-bottom: 12px;
-    }
-    #thank-you p {
-      font-size: 1rem;
-      color: var(--charcoal);
-      opacity: 0.75;
-      max-width: 360px;
-      line-height: 1.6;
-      margin-bottom: 32px;
-    }
+    .checkmark svg { width: 34px; height: 34px; }
+    #thank-you h2 { font-size: 1.5rem; font-weight: 800; color: var(--charcoal); margin-bottom: 10px; }
+    #thank-you p { font-size: 0.97rem; color: var(--charcoal); opacity: 0.75; max-width: 340px; line-height: 1.6; margin-bottom: 28px; }
     .wa-btn {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       background: #25d366;
       color: white;
       text-decoration: none;
-      padding: 14px 28px;
+      padding: 13px 24px;
       border-radius: 12px;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 0.95rem;
       transition: background 0.2s;
     }
     .wa-btn:hover { background: #1ebe5d; }
-    .wa-btn svg { width: 32px; height: 32px; flex-shrink: 0; }
-    /* ── DECORATIVE DOTS ── */
-    .dots {
-      position: fixed;
-      border-radius: 50%;
-      opacity: 0.18;
-      pointer-events: none;
-      z-index: 0;
+    .wa-btn svg { width: 26px; height: 26px; flex-shrink: 0; }
+
+    /* ── SECTIONS ── */
+    section { padding: 80px 24px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.70rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 10px;
     }
-    .dot1 { width: 280px; height: 280px; background: var(--purple); top: -80px; right: -80px; }
-    .dot2 { width: 200px; height: 200px; background: var(--green);  bottom: -60px; left: -60px; }
-    .dot3 { width: 120px; height: 120px; background: var(--yellow); bottom: 120px; right: 40px; }
-    .hero, header { position: relative; z-index: 1; }
-    /* ── MOBILE ── */
-    @media (max-width: 500px) {
-      .card { padding: 28px 20px; border-radius: 20px; }
-      h1 { font-size: 1.9rem; }
+    .section-title { font-size: clamp(1.6rem, 4vw, 2.3rem); font-weight: 800; color: var(--charcoal); margin-bottom: 12px; line-height: 1.2; }
+    .section-title em { font-style: normal; color: var(--purple); }
+    .section-subtitle { font-size: 1rem; color: var(--charcoal); opacity: 0.7; max-width: 540px; line-height: 1.6; margin-bottom: 48px; }
+
+    /* ── PROFES ── */
+    #profes { background: var(--lavender); }
+    .profes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .profe-card {
+      background: white;
+      border-radius: 24px;
+      padding: 36px 28px;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(120,95,179,0.10);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .profe-photo {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 18px;
+      border: 3px solid var(--lavender);
+    }
+    .profe-photo-placeholder {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      background: var(--lavender);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem;
+      margin-bottom: 18px;
+    }
+    .profe-name { font-size: 1.2rem; font-weight: 800; color: var(--purple); margin-bottom: 12px; }
+    .profe-bio { font-size: 0.87rem; color: var(--charcoal); line-height: 1.7; opacity: 0.85; margin-bottom: 24px; flex: 1; }
+    .btn-agendar {
+      display: inline-block;
+      background: var(--green);
+      color: white;
+      text-decoration: none;
+      padding: 11px 22px;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 0.87rem;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-agendar:hover { background: #00a87d; }
+    .profe-card.coming-soon { opacity: 0.5; }
+
+    /* ── PRODUCTOS ── */
+    #productos { background: white; }
+    .product-category { margin-bottom: 56px; }
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--lavender);
+    }
+    .category-icon { font-size: 1.5rem; }
+    .category-title { font-size: 1.25rem; font-weight: 800; color: var(--charcoal); }
+    .category-note { font-size: 0.78rem; color: var(--charcoal); opacity: 0.5; margin-left: auto; font-weight: 500; }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+      gap: 20px;
+    }
+    .products-grid.two-col {
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      max-width: 680px;
+    }
+
+    /* ── PRODUCT CARD ── */
+    .product-card {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1.5px solid #f0f0f0;
+    }
+    .product-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(120,95,179,0.15); }
+    .card-visual {
+      height: 120px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.8rem;
+      position: relative; overflow: hidden;
+      background: #f5f2fb;
+    }
+    .card-visual img { width: 72px; height: 72px; object-fit: contain; position: relative; z-index: 1; }
+    .card-visual-foto img { width: 88%; height: 96px; object-fit: cover; border-radius: 10px; }
+    .card-visual-ebook       { background: #f5f2fb; }
+    .card-visual-bundle      { background: #f5f2fb; }
+    .card-visual-individual  { background: #f0fbf7; }
+    .card-visual-grupal      { background: #fffbeb; }
+    .btn-comprar.disabled {
+      background: #c8c4d4;
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+    .card-deco {
+      position: absolute; border-radius: 50%; opacity: 0.15; background: white;
+    }
+    .card-deco.d1 { width: 90px; height: 90px; top: -25px; right: -15px; }
+    .card-deco.d2 { width: 55px; height: 55px; bottom: -18px; left: 18px; }
+    .card-body { padding: 22px 20px; display: flex; flex-direction: column; flex: 1; background: white; }
+    .product-tag { font-size: 0.67rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--purple); margin-bottom: 5px; }
+    .product-name { font-size: 0.97rem; font-weight: 700; color: var(--charcoal); margin-bottom: 12px; line-height: 1.4; }
+    .price { font-size: 1.45rem; font-weight: 800; color: var(--purple); }
+    .price-original { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+    .strike { font-size: 0.82rem; color: var(--charcoal); opacity: 0.4; text-decoration: line-through; }
+    .savings-badge { background: var(--lime); color: var(--charcoal); font-size: 0.70rem; font-weight: 700; padding: 3px 8px; border-radius: 100px; }
+    .features { list-style: none; margin: 14px 0 20px; flex: 1; }
+    .features li {
+      font-size: 0.81rem; color: var(--charcoal); opacity: 0.75;
+      padding: 3px 0 3px 18px; position: relative; line-height: 1.4;
+    }
+    .features li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+    .coming-soon-note { font-size: 0.76rem; color: var(--purple); opacity: 0.7; font-style: italic; margin-top: 6px; }
+    .card-actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+    .btn-comprar {
+      display: block; text-align: center;
+      background: var(--purple); color: white;
+      text-decoration: none; padding: 11px;
+      border-radius: 10px; font-weight: 700; font-size: 0.88rem;
+      transition: background 0.2s;
+    }
+    .btn-comprar:hover { background: #6a50a3; }
+    .btn-secondary {
+      display: block; text-align: center;
+      background: transparent; color: var(--purple);
+      text-decoration: none; padding: 9px;
+      border-radius: 10px; font-weight: 600; font-size: 0.83rem;
+      border: 1.5px solid var(--lavender);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--purple); background: var(--lavender); }
+
+    /* ── FREEBIE BANNER ── */
+    .freebie-banner {
+      background: linear-gradient(135deg, var(--charcoal) 0%, #4a5f6a 100%);
+      border-radius: 20px;
+      padding: 32px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+    }
+    .freebie-text h3 { font-size: 1.15rem; font-weight: 800; color: var(--lime); margin-bottom: 6px; }
+    .freebie-text p { font-size: 0.88rem; color: white; opacity: 0.82; max-width: 420px; line-height: 1.5; }
+    .btn-freebie {
+      display: inline-block;
+      background: var(--lime); color: var(--charcoal);
+      text-decoration: none; padding: 12px 24px;
+      border-radius: 100px; font-weight: 800; font-size: 0.88rem;
+      white-space: nowrap;
+      transition: transform 0.1s, box-shadow 0.2s;
+    }
+    .btn-freebie:hover { transform: scale(1.03); box-shadow: 0 4px 16px rgba(222,255,131,0.4); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--charcoal); color: white; padding: 32px 24px; }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-logo { font-size: 1.2rem; font-weight: 800; color: white; }
+    .footer-logo span { color: var(--green); }
+    .footer-links { display: flex; align-items: center; gap: 20px; }
+    .footer-links a { color: white; opacity: 0.6; text-decoration: none; font-size: 0.84rem; transition: opacity 0.2s; }
+    .footer-links a:hover { opacity: 1; }
+    .footer-wa {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #25d366; color: white; text-decoration: none;
+      padding: 9px 18px; border-radius: 100px;
+      font-weight: 700; font-size: 0.84rem;
+      transition: background 0.2s;
+    }
+    .footer-wa:hover { background: #1ebe5d; }
+    .footer-wa svg { width: 18px; height: 18px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .header-nav a:not(.nav-cta) { display: none; }
+      .profes-grid { grid-template-columns: 1fr; }
+      .products-grid, .products-grid.two-col { grid-template-columns: 1fr; }
+      .freebie-banner { padding: 24px 20px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .category-note { display: none; }
+      section { padding: 56px 20px; }
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: 1.85rem; }
+      .form-card { padding: 28px 20px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="dots dot1"></div>
-  <div class="dots dot2"></div>
-  <div class="dots dot3"></div>
-
+  <!-- HEADER -->
   <header>
-    <img class="logo-img" src="logo.png" alt="YouLearn logo" />
-    <div class="logo-wordmark">You<span>Learn</span></div>
+    <div class="header-inner">
+      <div class="header-logo">
+        <img class="logo-img" src="logo.png" alt="YouLearn logo" />
+        <div class="logo-wordmark">You<span>Learn</span></div>
+      </div>
+      <nav class="header-nav">
+        <a href="#profes">Conocé a las profes</a>
+        <a href="#productos">Servicios</a>
+        <a href="#productos" class="nav-cta">Empezar ahora</a>
+      </nav>
+    </div>
   </header>
 
-  <main class="hero">
-    <span class="badge">Clases de inglés online</span>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="dots dot1"></div>
+    <div class="dots dot2"></div>
+    <div class="dots dot3"></div>
 
+    <span class="badge">Clases de inglés online</span>
     <h1>Desbloqueá tu inglés y <em>superá el trauma</em></h1>
     <p class="subtitle">
       Para quienes quieren animarse a tener una entrevista, dar una presentación o simplemente participar en una conversación 100% en inglés.
     </p>
 
     <!-- FORM -->
-    <div class="card" id="form-card">
+    <div class="form-card" id="form-card">
       <h2>Completá con tus datos y recibí novedades y recursos gratuitos</h2>
       <form id="yl-form" novalidate>
         <div class="field">
@@ -264,29 +449,311 @@
           <label for="email">Tu email</label>
           <input type="email" id="email" name="email" placeholder="tucorreo@gmail.com" required autocomplete="email" />
         </div>
-        <button class="btn" type="submit" id="submit-btn">Enviar →</button>
-        <div class="error-msg" id="error-msg">Algo salió mal. Por favor intentá de nuevo.</div>
+        <button class="btn-submit" type="submit" id="submit-btn">Enviar →</button>
+        <div class="error-msg" id="error-msg"></div>
       </form>
       <p class="privacy">Sin spam, prometido. Podés darte de baja cuando quieras.</p>
     </div>
 
     <!-- GRACIAS -->
-    <div class="card" id="thank-you">
+    <div class="form-card" id="thank-you">
       <div class="checkmark">
-        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8 18l7 7 13-13" stroke="#38464f" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <svg viewBox="0 0 36 36" fill="none"><path d="M8 18l7 7 13-13" stroke="#38464f" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-      <h2>¡Gracias! 💜</h2>
+      <h2>¡Gracias!</h2>
       <p>Pronto te van a llegar novedades, recursos y promos que te pueden interesar para dar el primer paso y desbloquear tu inglés posta posta!</p>
       <a class="wa-btn" href="https://wa.me/541565727391" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Click acá para escribirme por WhatsApp para info de clases o agendar tu test de nivel sin cargo
       </a>
     </div>
-  </main>
+  </div>
+
+  <!-- PROFES -->
+  <section id="profes">
+    <div class="section-inner">
+      <span class="section-label">El equipo</span>
+      <h2 class="section-title">Conocé a <em>nuestras profes</em></h2>
+      <p class="section-subtitle">Cada una tiene su estilo y especialidad. Encontrá la que mejor se adapta a lo que necesitás.</p>
+
+      <div class="profes-grid">
+
+        <div class="profe-card">
+          <img class="profe-photo" src="ALI.jpg" alt="Ali — fundadora de YouLearn" />
+          <div class="profe-name">Ali</div>
+          <p class="profe-bio">
+            La fundadora de YouLearn. Estudió en Lenguas Vivas SBS de Buenos Aires y es la voz detrás del contenido de redes, el armado de Ebooks y los cursos de fonética. Si tu tema con el inglés es miedo para hablar, una diferencia grande entre lo que entendés y lo que podés decir, o si necesitás ayuda con tus sonidos porque sentís que no estás pronunciando bien, ella es la ideal para vos. También le encanta prepararte para certificar tu nivel con algún examen internacional (FCE, CAE, IELTS, TOEFL).
+          </p>
+          <a class="btn-agendar" href="#LINK-CALENDARIO-ALI" target="_blank" rel="noopener">Agendar con Ali →</a>
+        </div>
+
+        <div class="profe-card">
+          <img class="profe-photo" src="SIL.jpg" alt="Sil — profe de YouLearn" />
+          <div class="profe-name">Sil</div>
+          <p class="profe-bio">
+            La más apasionada por hacer hablar inglés hasta a lxs más principiantes, además de intérprete English/Spanish, Sil tiene certificación docente CELTA y una vocación docente que se puede ver. Se autodefine como "una migrada que volvió a la patria que llora durante el himno en los actos del cole de su hijo". Ella vivió en USA, Alemania y Brasil, así que te va a hacer hablar como hablan afuera, y te vas a sentir MUY a gusto en clase con ella.
+          </p>
+          <a class="btn-agendar" href="#LINK-CALENDARIO-SIL" target="_blank" rel="noopener">Agendar con Sil →</a>
+        </div>
+
+        <div class="profe-card">
+          <img class="profe-photo" src="ANTO.jpg" alt="Anto — profe de YouLearn" />
+          <div class="profe-name">Anto</div>
+          <p class="profe-bio">
+            La que se fascina por la diversidad del idioma y ama explorar cómo cambia la pronunciación, el vocabulario y las expresiones de región en región, y compartir esa curiosidad con sus alumnxs. Estudió en Lenguas Vivas SBS de Buenos Aires. Su objetivo no es que hables como un nativo, sino que desarrolles un inglés que te permita comunicarte con confianza y entender el idioma tal como se usa en el mundo real. Además, es muy nerd de la ciencia del aprendizaje y lleva todo lo que tiene respaldo científico a sus clases para que aprender sea más efectivo y con resultados reales.
+          </p>
+          <a class="btn-agendar" href="#LINK-CALENDARIO-ANTO" target="_blank" rel="noopener">Agendar con Anto →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS -->
+  <section id="productos">
+    <div class="section-inner">
+      <span class="section-label">Servicios</span>
+      <h2 class="section-title">Todo lo que podés hacer <em>con YouLearn</em></h2>
+      <p class="section-subtitle">Desde recursos para estudiar sola hasta clases con profe. Encontrá lo que mejor encaja con tu momento.</p>
+
+      <!-- FREEBIE -->
+      <div class="freebie-banner">
+        <img src="freebie.jpg" alt="Recurso gratuito" style="width:72px;height:72px;object-fit:contain;flex-shrink:0;" />
+        <div class="freebie-text">
+          <h3>Recurso gratuito</h3>
+          <p>Descargá la <strong>Rutina de activación del inglés en tu cerebro</strong> › una plantilla semanal imprimible para que empieces a pensar en inglés y dejes de traducir todo.</p>
+        </div>
+        <a class="btn-freebie" href="#LINK-FREEBIE" target="_blank" rel="noopener">Descargar gratis</a>
+      </div>
+
+      <!-- EBOOK -->
+      <div class="product-category">
+        <div class="category-header">
+          <span class="category-icon">📚</span>
+          <span class="category-title">Ebooks</span>
+        </div>
+        <div class="products-grid two-col">
+
+          <div class="product-card">
+            <div class="card-visual card-visual-ebook">
+              <img src="ebook.jpg" alt="Ebook" />
+            </div>
+            <div class="card-body">
+              <div class="product-tag">Ebook · Tomo 1</div>
+              <div class="product-name">Present Tenses › Guía completa de los 4 tiempos presentes</div>
+              <div class="price">$22.000</div>
+              <ul class="features">
+                <li>Guía bilingüe (español + inglés)</li>
+                <li>Todos los presentes explicados con ejemplos</li>
+                <li>Actividades + respuestas incluidas</li>
+              </ul>
+              <p class="coming-soon-note">Próximamente: Tomo 2 (Past Tenses) y Tomo 3 (Future Tenses)</p>
+              <div class="card-actions" style="margin-top:16px;">
+                <a class="btn-comprar disabled" href="#">Próximamente</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="card-visual card-visual-bundle">
+              <img src="ebook.jpg" alt="Ebook + sesión" />
+            </div>
+            <div class="card-body">
+              <div class="product-tag">Pack especial</div>
+              <div class="product-name">Ebook Present Tenses + Sesión de consulta individual (30 min)</div>
+              <div class="price">$40.000</div>
+              <ul class="features">
+                <li>Ebook completo Present Tenses</li>
+                <li>Sesión 1:1 de 30 min con una profe</li>
+                <li>Revisamos tus errores y dudas juntas</li>
+              </ul>
+              <div class="card-actions">
+                <a class="btn-comprar disabled" href="#">Próximamente</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CLASES INDIVIDUALES -->
+      <div class="product-category">
+        <div class="category-header">
+          <span class="category-icon">👤</span>
+          <span class="category-title">Clases individuales</span>
+          <span class="category-note">55 min por clase · Incluye materiales · Elegís profe y horario</span>
+        </div>
+        <div class="products-grid">
+
+          <div class="product-card">
+            <div class="card-visual card-visual-individual card-visual-foto">
+              <img src="packsind.jpg" alt="Clases individuales" />
+            </div>
+            <div class="card-body">
+              <div class="product-tag">Individual · Pack 4</div>
+              <div class="product-name">4 clases individuales de 55 min</div>
+              <div class="price">$116.000</div>
+              <ul class="features">
+                <li>55 minutos por clase</li>
+                <li>Materiales incluidos</li>
+                <li>Agenda directa con tu profe</li>
+              </ul>
+              <div class="card-actions">
+                <a class="btn-comprar" href="#LINK-MP-IND-4" target="_blank" rel="noopener">Comprar →</a>
+                <a class="btn-secondary" href="#LINK-AGENDA-PROFES" target="_blank" rel="noopener">Ver disponibilidad</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="card-visual card-visual-individual card-visual-foto">
+              <img src="packsind.jpg" alt="Clases individuales" />
+            </div>
+            <div class="card-body">
+              <div class="product-tag">Individual · Pack 8</div>
+              <div class="product-name">8 clases individuales de 55 min</div>
+              <div class="price">$210.000</div>
+              <div class="price-original">
+                <span class="strike">$232.000</span>
+                <span class="savings-badge">Ahorrás $22.000</span>
+              </div>
+              <ul class="features">
+                <li>55 minutos por clase</li>
+                <li>Materiales incluidos</li>
+                <li>Agenda directa con tu profe</li>
+              </ul>
+              <div class="card-actions">
+                <a class="btn-comprar" href="#LINK-MP-IND-8" target="_blank" rel="noopener">Comprar →</a>
+                <a class="btn-secondary" href="#LINK-AGENDA-PROFES" target="_blank" rel="noopener">Ver disponibilidad</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="card-visual card-visual-individual card-visual-foto">
+              <img src="packsind.jpg" alt="Clases individuales" />
+            </div>
+            <div class="card-body">
+              <div class="product-tag">Individual · Pack 12</div>
+              <div class="product-name">12 clases individuales de 55 min</div>
+              <div class="price">$310.000</div>
+              <div class="price-original">
+                <span class="strike">$348.000</span>
+                <span class="savings-badge">Ahorrás $38.000</span>
+              </div>
+              <ul class="features">
+                <li>55 minutos por clase</li>
+                <li>Materiales incluidos</li>
+                <li>Agenda directa con tu profe</li>
+              </ul>
+              <div class="card-actions">
+                <a class="btn-comprar" href="#LINK-MP-IND-12" target="_blank" rel="noopener">Comprar →</a>
+                <a class="btn-secondary" href="#LINK-AGENDA-PROFES" target="_blank" rel="noopener">Ver disponibilidad</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CLASES GRUPALES -->
+      <div class="product-category">
+        <div class="category-header">
+          <span class="category-icon">👥</span>
+          <span class="category-title">Clases grupales</span>
+          <span class="category-note">55 min · 1 vez por semana · Máx. 3 alumnxs por grupo</span>
+        </div>
+        <div class="products-grid">
+
+          <div class="product-card">
+            <div class="card-visual card-visual-grupal card-visual-foto">
+              <img src="packsgrup.png" alt="Clases grupales" />
+            </div>
+            <div class="card-body">
+              <div class="product-tag">Grupal · Pack 4</div>
+              <div class="product-name">4 clases grupales de 55 min</div>
+              <div class="price">$98.000</div>
+              <ul class="features">
+                <li>Máximo 3 alumnxs por grupo</li>
+                <li>1 vez por semana</li>
+                <li>Test de nivel previo para encontrar tu grupo ideal</li>
+              </ul>
+              <div class="card-actions">
+                <a class="btn-comprar" href="#LINK-MP-GRP-4" target="_blank" rel="noopener">Comprar →</a>
+                <a class="btn-secondary" href="#LINK-TEST-NIVEL" target="_blank" rel="noopener">Hacer test de nivel</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="card-visual card-visual-grupal card-visual-foto">
+              <img src="packsgrup.png" alt="Clases grupales" />
+            </div>
+            <div class="card-body">
+              <div class="product-tag">Grupal · Pack 8</div>
+              <div class="product-name">8 clases grupales de 55 min</div>
+              <div class="price">$176.000</div>
+              <div class="price-original">
+                <span class="strike">$196.000</span>
+                <span class="savings-badge">Ahorrás $20.000</span>
+              </div>
+              <ul class="features">
+                <li>Máximo 3 alumnxs por grupo</li>
+                <li>1 vez por semana</li>
+                <li>Test de nivel previo para encontrar tu grupo ideal</li>
+              </ul>
+              <div class="card-actions">
+                <a class="btn-comprar" href="#LINK-MP-GRP-8" target="_blank" rel="noopener">Comprar →</a>
+                <a class="btn-secondary" href="#LINK-TEST-NIVEL" target="_blank" rel="noopener">Hacer test de nivel</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="card-visual card-visual-grupal card-visual-foto">
+              <img src="packsgrup.png" alt="Clases grupales" />
+            </div>
+            <div class="card-body">
+              <div class="product-tag">Grupal · Pack 12</div>
+              <div class="product-name">12 clases grupales de 55 min</div>
+              <div class="price">$260.000</div>
+              <div class="price-original">
+                <span class="strike">$294.000</span>
+                <span class="savings-badge">Ahorrás $34.000</span>
+              </div>
+              <ul class="features">
+                <li>Máximo 3 alumnxs por grupo</li>
+                <li>1 vez por semana</li>
+                <li>Test de nivel previo para encontrar tu grupo ideal</li>
+              </ul>
+              <div class="card-actions">
+                <a class="btn-comprar" href="#LINK-MP-GRP-12" target="_blank" rel="noopener">Comprar →</a>
+                <a class="btn-secondary" href="#LINK-TEST-NIVEL" target="_blank" rel="noopener">Hacer test de nivel</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">You<span>Learn</span></div>
+      <div class="footer-links">
+        <a href="#profes">Profes</a>
+        <a href="#productos">Servicios</a>
+        <a href="https://instagram.com/youlearnba" target="_blank" rel="noopener">@youlearnba</a>
+      </div>
+      <a class="footer-wa" href="https://wa.me/541565727391" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </footer>
 
   <script>
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbzFxWVlA_tVxqFHQa3y29FDW9IKrVnYdcBlxN-oKK80aY4Q1UrCLKU0cpJdLjfHverj/exec';
@@ -310,12 +777,12 @@
       const email  = document.getElementById('email').value.trim();
 
       if (!nombre) {
-        errorMsg.textContent  = 'Por favor ingresá tu nombre.';
+        errorMsg.textContent   = 'Por favor ingresá tu nombre.';
         errorMsg.style.display = 'block';
         return;
       }
       if (!email || !emailValido(email)) {
-        errorMsg.textContent  = 'El email no parece válido. Revisá que tenga @ y un dominio completo (ej: tucorreo@gmail.com).';
+        errorMsg.textContent   = 'El email no parece válido. Revisá que tenga @ y un dominio completo (ej: tucorreo@gmail.com).';
         errorMsg.style.display = 'block';
         return;
       }
@@ -335,9 +802,10 @@
         submitBtn.disabled    = false;
         submitBtn.textContent = 'Enviar →';
         errorMsg.style.display = 'block';
+        errorMsg.textContent = 'Algo salió mal. Por favor intentá de nuevo.';
       }
     });
   </script>
+
 </body>
 </html>
-
