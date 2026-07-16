@@ -319,12 +319,11 @@
     .category-note { font-size: 0.78rem; color: var(--charcoal); opacity: 0.5; margin-left: auto; font-weight: 500; }
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
       gap: 14px;
     }
-    .products-grid.two-col {
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      max-width: 580px;
+    .products-grid.ebook-grid {
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
     }
 
     /* ── PRODUCT CARD ── */
@@ -496,7 +495,8 @@
       .header-nav { gap: 6px; }
       .header-nav a:not(.nav-cta) { padding: 7px 10px; font-size: 0.72rem; }
       .profes-grid { grid-template-columns: 1fr; }
-      .products-grid, .products-grid.two-col { grid-template-columns: 1fr; }
+      .products-grid { grid-template-columns: 1fr; }
+      .products-grid.ebook-grid { grid-template-columns: repeat(2, 1fr); }
       .freebie-banner { padding: 24px 20px; }
       .footer-inner { flex-direction: column; text-align: center; }
       .category-note { display: none; }
@@ -844,7 +844,7 @@
           <img src="ebook.gif" style="width:80px;height:80px;object-fit:contain;" alt="" />
           <span class="category-title">Ebooks</span>
         </div>
-        <div class="products-grid two-col">
+        <div class="products-grid ebook-grid">
 
           <!-- PHRASAL VERBS — ACTIVO -->
           <div class="product-card">
