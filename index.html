@@ -304,7 +304,7 @@
     .profe-card.coming-soon { opacity: 0.5; }
 
     /* ── PRODUCTOS ── */
-    #productos { background: var(--off-white); }
+    #clases { background: var(--off-white); }
     .product-category { margin-bottom: 56px; }
     .category-header {
       display: flex;
@@ -323,7 +323,8 @@
       gap: 14px;
     }
     .products-grid.ebook-grid {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(200px, 340px));
+      justify-content: center;
     }
 
     /* ── PRODUCT CARD ── */
@@ -502,7 +503,7 @@
       .header-nav a:not(.nav-cta) { padding: 7px 10px; font-size: 0.72rem; }
       .profes-grid { grid-template-columns: 1fr; }
       .products-grid { grid-template-columns: 1fr; }
-      .products-grid.ebook-grid { grid-template-columns: repeat(3, 1fr); }
+      .products-grid.ebook-grid { grid-template-columns: 1fr; }
       .freebie-banner { padding: 24px 20px; }
       .footer-inner { flex-direction: column; text-align: center; }
       .category-note { display: none; }
@@ -524,7 +525,7 @@
       </div>
       <nav class="header-nav">
         <a href="#profes">Teachers</a>
-        <a href="#productos">Clases</a>
+        <a href="#clases">Clases</a>
         <a href="#ebooks">Ebooks</a>
       </nav>
     </div>
@@ -636,7 +637,7 @@
   </section>
 
   <!-- PRODUCTOS -->
-  <section id="productos">
+  <section id="clases">
     <div class="section-inner">
 
 
@@ -889,7 +890,7 @@
             </div>
             <div class="card-body">
               <div class="product-tag">Ebook · Tomo 1</div>
-              <div class="product-name">Present Tenses</div>
+              <div class="product-name">Present Tenses<br><span style="font-size:0.82em;opacity:0.65;font-weight:500;">Explicaciones claras de los 4 presentes</span></div>
               <ul class="features">
                 <li>Guía bilingüe (español + inglés)</li>
                 <li>Los 4 tiempos presentes con ejemplos</li>
@@ -911,7 +912,7 @@
             </div>
             <div class="card-body">
               <div class="product-tag">Ebook · Tomo 2</div>
-              <div class="product-name">Past Tenses</div>
+              <div class="product-name">Past Tenses<br><span style="font-size:0.82em;opacity:0.65;font-weight:500;">Explicaciones claras de los 4 pasados</span></div>
               <ul class="features">
                 <li>Guía bilingüe (español + inglés)</li>
                 <li>Los tiempos pasados con ejemplos</li>
@@ -939,7 +940,7 @@
       <div class="footer-logo"><span style="color:var(--purple)">You</span><span style="color:var(--green)">Learn</span></div>
       <div class="footer-links">
         <a href="#profes">Teachers</a>
-        <a href="#productos">Clases</a>
+        <a href="#clases">Clases</a>
         <a href="#ebooks">Ebooks</a>
       </div>
       <div class="footer-social">
