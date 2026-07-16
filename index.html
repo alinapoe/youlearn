@@ -411,7 +411,14 @@
     }
     .btn-paypal:hover { background: #005ea6; }
     .btn-row { display: flex; gap: 8px; }
-    .btn-row .btn-comprar { flex: 1; font-size: 0.80rem; padding: 10px 8px; border-radius: 8px; }
+    .btn-row .btn-comprar { flex: 1; font-size: 0.80rem; padding: 10px 8px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 1px; }
+    .btn-row .btn-paypal  { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+    .btn-label { font-size: 0.68rem; font-weight: 600; opacity: 0.88; line-height: 1; }
+    .btn-price { font-size: 0.86rem; font-weight: 800; line-height: 1.2; }
+    .products-grid { max-width: 720px; }
+    @media (max-width: 640px) {
+      .product-card { max-width: 300px; margin-left: auto; margin-right: auto; }
+    }
     .transfer-callout {
       background: var(--lime);
       border-radius: 10px;
@@ -647,12 +654,12 @@
               <ul class="features">
                 <li>100% personalizadas</li>
                 <li>Materiales incluidos</li>
-                <li>Agenda directa con tu profe</li>
+                <li>Reprogramables (24hs antes)</li>
               </ul>
               <div class="card-actions">
                 <div class="transfer-callout">
                   <div class="transfer-callout-info">
-                    <span class="transfer-callout-label">Transferencia bancaria</span>
+                    <span class="transfer-callout-label">Transferencia</span>
                     <span class="transfer-callout-price">$116.000</span>
                   </div>
                   <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+4+clases+individuales+%28%24116.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
@@ -677,12 +684,12 @@
               <ul class="features">
                 <li>100% personalizadas</li>
                 <li>Materiales incluidos</li>
-                <li>Agenda directa con tu profe</li>
+                <li>Reprogramables (24hs antes)</li>
               </ul>
               <div class="card-actions">
                 <div class="transfer-callout">
                   <div class="transfer-callout-info">
-                    <span class="transfer-callout-label">Transferencia bancaria</span>
+                    <span class="transfer-callout-label">Transferencia</span>
                     <span class="transfer-callout-price">$210.000</span>
                   </div>
                   <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+8+clases+individuales+%28%24210.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
@@ -707,12 +714,12 @@
               <ul class="features">
                 <li>100% personalizadas</li>
                 <li>Materiales incluidos</li>
-                <li>Agenda directa con tu profe</li>
+                <li>Reprogramables (24hs antes)</li>
               </ul>
               <div class="card-actions">
                 <div class="transfer-callout">
                   <div class="transfer-callout-info">
-                    <span class="transfer-callout-label">Transferencia bancaria</span>
+                    <span class="transfer-callout-label">Transferencia</span>
                     <span class="transfer-callout-price">$310.000</span>
                   </div>
                   <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+12+clases+individuales+%28%24310.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
@@ -754,7 +761,7 @@
               <div class="card-actions">
                 <div class="transfer-callout">
                   <div class="transfer-callout-info">
-                    <span class="transfer-callout-label">Transferencia bancaria</span>
+                    <span class="transfer-callout-label">Transferencia</span>
                     <span class="transfer-callout-price">$98.000</span>
                   </div>
                   <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+4+clases+grupales+%28%2498.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
@@ -773,7 +780,7 @@
               <img src="packsgrup.png" alt="Clases grupales" />
             </div>
             <div class="card-body">
-              <div class="product-tag">Grupal · Pack 8</div>
+              <div class="product-tag">Grupal · Pack 8 · <span style="font-weight:500;opacity:0.7;">dura 2 meses</span></div>
               <div class="product-name">8 clases grupales de 55 min</div>
               <div class="price">$176.000</div>
               <ul class="features">
@@ -784,7 +791,7 @@
               <div class="card-actions">
                 <div class="transfer-callout">
                   <div class="transfer-callout-info">
-                    <span class="transfer-callout-label">Transferencia bancaria</span>
+                    <span class="transfer-callout-label">Transferencia</span>
                     <span class="transfer-callout-price">$176.000</span>
                   </div>
                   <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+8+clases+grupales+%28%24176.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
@@ -803,7 +810,7 @@
               <img src="packsgrup.png" alt="Clases grupales" />
             </div>
             <div class="card-body">
-              <div class="product-tag">Grupal · Pack 12</div>
+              <div class="product-tag">Grupal · Pack 12 · <span style="font-weight:500;opacity:0.7;">dura 3 meses</span></div>
               <div class="product-name">12 clases grupales de 55 min</div>
               <div class="price">$260.000</div>
               <ul class="features">
@@ -814,7 +821,7 @@
               <div class="card-actions">
                 <div class="transfer-callout">
                   <div class="transfer-callout-info">
-                    <span class="transfer-callout-label">Transferencia bancaria</span>
+                    <span class="transfer-callout-label">Transferencia</span>
                     <span class="transfer-callout-price">$260.000</span>
                   </div>
                   <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+12+clases+grupales+%28%24260.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
@@ -856,7 +863,7 @@
               <div class="card-actions">
                 <div class="transfer-callout">
                   <div class="transfer-callout-info">
-                    <span class="transfer-callout-label">Transferencia bancaria</span>
+                    <span class="transfer-callout-label">Transferencia</span>
                     <span class="transfer-callout-price">$12.000</span>
                   </div>
                   <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Ebook+Phrasal+Verbs+%28%2412.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
@@ -1039,6 +1046,17 @@
         submitBtn.textContent = 'Enviar →';
         errorMsg.style.display = 'block';
         errorMsg.textContent = 'Algo salió mal. Por favor intentá de nuevo.';
+      }
+    });
+  </script>
+
+  <script>
+    // Split "Tarjeta · $X" and "PayPal · USD $X" into two-line buttons
+    document.querySelectorAll('.btn-row .btn-comprar, .btn-row .btn-paypal').forEach(btn => {
+      const text = btn.textContent.trim();
+      const parts = text.split(' · ');
+      if (parts.length === 2) {
+        btn.innerHTML = `<span class="btn-label">${parts[0]}</span><span class="btn-price">${parts[1]}</span>`;
       }
     });
   </script>
