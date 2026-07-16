@@ -319,11 +319,11 @@
     .category-note { font-size: 0.78rem; color: var(--charcoal); opacity: 0.5; margin-left: auto; font-weight: 500; }
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 14px;
     }
     .products-grid.ebook-grid {
-      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
     }
 
     /* ── PRODUCT CARD ── */
@@ -414,10 +414,6 @@
     .btn-row .btn-paypal  { display: flex; flex-direction: column; align-items: center; gap: 1px; }
     .btn-label { font-size: 0.68rem; font-weight: 600; opacity: 0.88; line-height: 1; }
     .btn-price { font-size: 0.86rem; font-weight: 800; line-height: 1.2; }
-    .products-grid { max-width: 720px; }
-    @media (max-width: 640px) {
-      .product-card { max-width: 300px; margin-left: auto; margin-right: auto; }
-    }
     .transfer-callout {
       background: var(--lime);
       border-radius: 10px;
@@ -506,7 +502,7 @@
       .header-nav a:not(.nav-cta) { padding: 7px 10px; font-size: 0.72rem; }
       .profes-grid { grid-template-columns: 1fr; }
       .products-grid { grid-template-columns: 1fr; }
-      .products-grid.ebook-grid { grid-template-columns: repeat(2, 1fr); }
+      .products-grid.ebook-grid { grid-template-columns: repeat(3, 1fr); }
       .freebie-banner { padding: 24px 20px; }
       .footer-inner { flex-direction: column; text-align: center; }
       .category-note { display: none; }
