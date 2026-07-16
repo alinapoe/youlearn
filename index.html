@@ -108,15 +108,24 @@
       position: relative;
       overflow: hidden;
     }
-    .dots { position: absolute; border-radius: 50%; pointer-events: none; }
-    .dot1 { width: 260px; height: 260px; background: var(--purple);   opacity: 0.55; top: -90px;   right: -70px; }
-    .dot2 { width: 180px; height: 180px; background: var(--green);    opacity: 0.65; bottom: -50px; left: -55px; }
-    .dot3 { width: 100px; height: 100px; background: var(--yellow);   opacity: 0.80; bottom: 100px; right: 50px; }
-    .dot4 { width:  60px; height:  60px; background: var(--lime);     opacity: 0.90; top: 60px;    left: 30px; }
-    .dot5 { width: 140px; height: 140px; background: var(--lavender); opacity: 0.75; top: -30px;   left: 140px; }
-    .dot6 { width:  44px; height:  44px; background: var(--charcoal); opacity: 0.30; bottom: 160px; left: 80px; }
-    .dot7 { width:  76px; height:  76px; background: var(--green);    opacity: 0.55; top: 20px;    right: 160px; }
-    .dot8 { width:  36px; height:  36px; background: var(--purple);   opacity: 0.70; bottom: 60px; right: 130px; }
+    .dots { position: absolute; border-radius: 50%; pointer-events: none; animation: floatBubble linear infinite; }
+    @keyframes floatBubble {
+      0%   { transform: translateY(0px)   scale(1); }
+      33%  { transform: translateY(-14px) scale(1.03); }
+      66%  { transform: translateY(8px)   scale(0.97); }
+      100% { transform: translateY(0px)   scale(1); }
+    }
+    /* Distribuidas por toda la altura del hero, más en la zona media/texto */
+    .dot1 { width: 200px; height: 200px; background: var(--purple);   opacity: 0.50; top: 10%;  right: -60px;  animation-duration: 9s;  animation-delay: 0s; }
+    .dot2 { width: 140px; height: 140px; background: var(--green);    opacity: 0.60; top: 45%;  left: -50px;   animation-duration: 11s; animation-delay: -3s; }
+    .dot3 { width:  90px; height:  90px; background: var(--yellow);   opacity: 0.80; top: 60%;  right: 40px;   animation-duration: 7s;  animation-delay: -1s; }
+    .dot4 { width:  52px; height:  52px; background: var(--lime);     opacity: 1.00; top: 30%;  left: 20px;    animation-duration: 8s;  animation-delay: -4s; }
+    .dot5 { width: 110px; height: 110px; background: var(--lavender); opacity: 0.70; top: 20%;  left: 38%;     animation-duration: 13s; animation-delay: -2s; }
+    .dot6 { width:  40px; height:  40px; background: var(--charcoal); opacity: 0.25; top: 70%;  left: 20%;     animation-duration: 10s; animation-delay: -5s; }
+    .dot7 { width:  68px; height:  68px; background: var(--green);    opacity: 0.50; top: 50%;  right: 22%;    animation-duration: 12s; animation-delay: -7s; }
+    .dot8 { width:  32px; height:  32px; background: var(--purple);   opacity: 0.65; top: 80%;  right: 15%;    animation-duration: 6s;  animation-delay: -2s; }
+    .dot9 { width:  56px; height:  56px; background: var(--yellow);   opacity: 0.70; top: 15%;  right: 25%;    animation-duration: 14s; animation-delay: -6s; }
+    .dot10{ width:  78px; height:  78px; background: var(--lime);     opacity: 0.85; top: 75%;  left: 55%;     animation-duration: 10s; animation-delay: -8s; }
     .hero > *:not(.dots) { position: relative; z-index: 1; }
     .badge {
       display: inline-block;
@@ -339,7 +348,7 @@
     .card-visual img { width: 80px; height: 80px; object-fit: contain; position: relative; z-index: 1; }
     .card-visual-foto img { width: 90%; height: auto; max-height: 100px; object-fit: contain; border-radius: 8px; }
     .card-visual-ebook       { background: #f5f2fb; }
-    .card-visual-ebook-active { background: #e0f7f1; }
+    .card-visual-ebook-active { background: #00bf90; }
     .card-visual-bundle      { background: #f5f2fb; }
     .card-visual-individual  { background: linear-gradient(135deg, #00bf90, #00e5ad); }
     .card-visual-grupal      { background: linear-gradient(135deg, #d4a800, #ffcf00); }
@@ -518,6 +527,8 @@
     <div class="dots dot6"></div>
     <div class="dots dot7"></div>
     <div class="dots dot8"></div>
+    <div class="dots dot9"></div>
+    <div class="dots dot10"></div>
 
     <span class="badge">Clases de inglés online</span>
     <h1>En <span style="color:var(--purple)">You</span><span style="color:var(--green)">Learn</span><br>desbloqueá tu inglés<br><em>y superá el trauma<br>de no poder hablarlo</em></h1>
@@ -836,7 +847,7 @@
             <div class="card-body">
               <div class="product-tag">Ebook · Disponible</div>
               <div class="product-name">Phrasal Verbs</div>
-              <div class="price">$12.600</div>
+              <div class="price">$12.000</div>
               <ul class="features">
                 <li>Phrasal verbs esenciales en contexto</li>
                 <li>Ejemplos reales y ejercicios</li>
@@ -846,9 +857,9 @@
                 <div class="transfer-callout">
                   <div class="transfer-callout-info">
                     <span class="transfer-callout-label">Transferencia bancaria</span>
-                    <span class="transfer-callout-price">$12.600</span>
+                    <span class="transfer-callout-price">$12.000</span>
                   </div>
-                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Ebook+Phrasal+Verbs+%28%2412.600%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
+                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Ebook+Phrasal+Verbs+%28%2412.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
                 </div>
                 <div class="btn-row">
                   <a class="btn-comprar" href="https://mpago.la/2jxFuvX" target="_blank" rel="noopener">Tarjeta · $14.000</a>
