@@ -319,7 +319,7 @@
     .category-note { font-size: 0.78rem; color: var(--charcoal); opacity: 0.5; margin-left: auto; font-weight: 500; }
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
       gap: 14px;
     }
     .products-grid.ebook-grid {
@@ -439,6 +439,16 @@
       transition: background 0.2s;
     }
     .transfer-callout-btn:hover { background: #00a87a; }
+
+    /* ── EBOOK: botones más pequeños ── */
+    .ebook-grid .transfer-callout { padding: 7px 10px; }
+    .ebook-grid .transfer-callout-label { font-size: 0.60rem; }
+    .ebook-grid .transfer-callout-price { font-size: 0.82rem; }
+    .ebook-grid .transfer-callout-btn { padding: 5px 8px; font-size: 0.68rem; }
+    .ebook-grid .btn-row .btn-comprar,
+    .ebook-grid .btn-row .btn-paypal { padding: 7px 6px; }
+    .ebook-grid .btn-label { font-size: 0.60rem; }
+    .ebook-grid .btn-price { font-size: 0.74rem; }
 
     /* ── FREEBIE BANNER ── */
     .freebie-banner {
@@ -662,7 +672,7 @@
                     <span class="transfer-callout-label">Transferencia</span>
                     <span class="transfer-callout-price">$116.000</span>
                   </div>
-                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+4+clases+individuales+%28%24116.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
+                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+4+clases+individuales+%28%24116.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar</a>
                 </div>
                 <div class="btn-row">
                   <a class="btn-comprar" href="https://mpago.la/2gxuThj" target="_blank" rel="noopener">Tarjeta · $128.000</a>
@@ -692,7 +702,7 @@
                     <span class="transfer-callout-label">Transferencia</span>
                     <span class="transfer-callout-price">$210.000</span>
                   </div>
-                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+8+clases+individuales+%28%24210.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
+                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+8+clases+individuales+%28%24210.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar</a>
                 </div>
                 <div class="btn-row">
                   <a class="btn-comprar" href="https://mpago.la/1A3P5kq" target="_blank" rel="noopener">Tarjeta · $232.000</a>
@@ -722,7 +732,7 @@
                     <span class="transfer-callout-label">Transferencia</span>
                     <span class="transfer-callout-price">$310.000</span>
                   </div>
-                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+12+clases+individuales+%28%24310.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
+                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+12+clases+individuales+%28%24310.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar</a>
                 </div>
                 <div class="btn-row">
                   <a class="btn-comprar" href="https://mpago.la/1RXwuNV" target="_blank" rel="noopener">Tarjeta · $340.000</a>
@@ -751,7 +761,7 @@
             </div>
             <div class="card-body">
               <div class="product-tag">Grupal · Pack 4</div>
-              <div class="product-name">4 clases grupales de 55 min</div>
+              <div class="product-name">4 clases grupales<br><span style="font-size:0.85em;opacity:0.7;">de 55 min</span></div>
               <div class="price">$98.000</div>
               <ul class="features">
                 <li>Máximo 3 alumnxs por grupo</li>
@@ -764,7 +774,7 @@
                     <span class="transfer-callout-label">Transferencia</span>
                     <span class="transfer-callout-price">$98.000</span>
                   </div>
-                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+4+clases+grupales+%28%2498.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
+                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+4+clases+grupales+%28%2498.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar</a>
                 </div>
                 <div class="btn-row">
                   <a class="btn-comprar" href="https://mpago.la/1oN4nQF" target="_blank" rel="noopener">Tarjeta · $108.000</a>
@@ -781,7 +791,7 @@
             </div>
             <div class="card-body">
               <div class="product-tag">Grupal · Pack 8 · <span style="font-weight:500;opacity:0.7;">dura 2 meses</span></div>
-              <div class="product-name">8 clases grupales de 55 min</div>
+              <div class="product-name">8 clases grupales<br><span style="font-size:0.85em;opacity:0.7;">de 55 min</span></div>
               <div class="price">$176.000</div>
               <ul class="features">
                 <li>Máximo 3 alumnxs por grupo</li>
@@ -794,7 +804,7 @@
                     <span class="transfer-callout-label">Transferencia</span>
                     <span class="transfer-callout-price">$176.000</span>
                   </div>
-                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+8+clases+grupales+%28%24176.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
+                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+8+clases+grupales+%28%24176.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar</a>
                 </div>
                 <div class="btn-row">
                   <a class="btn-comprar" href="https://mpago.la/2KJ1n8B" target="_blank" rel="noopener">Tarjeta · $194.000</a>
@@ -811,7 +821,7 @@
             </div>
             <div class="card-body">
               <div class="product-tag">Grupal · Pack 12 · <span style="font-weight:500;opacity:0.7;">dura 3 meses</span></div>
-              <div class="product-name">12 clases grupales de 55 min</div>
+              <div class="product-name">12 clases grupales<br><span style="font-size:0.85em;opacity:0.7;">de 55 min</span></div>
               <div class="price">$260.000</div>
               <ul class="features">
                 <li>Máximo 3 alumnxs por grupo</li>
@@ -824,7 +834,7 @@
                     <span class="transfer-callout-label">Transferencia</span>
                     <span class="transfer-callout-price">$260.000</span>
                   </div>
-                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+12+clases+grupales+%28%24260.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
+                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Pack+12+clases+grupales+%28%24260.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar</a>
                 </div>
                 <div class="btn-row">
                   <a class="btn-comprar" href="https://mpago.la/2YXYD6b" target="_blank" rel="noopener">Tarjeta · $286.000</a>
@@ -866,7 +876,7 @@
                     <span class="transfer-callout-label">Transferencia</span>
                     <span class="transfer-callout-price">$12.000</span>
                   </div>
-                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Ebook+Phrasal+Verbs+%28%2412.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar →</a>
+                  <a class="transfer-callout-btn" href="https://wa.me/541565727391?text=Hola%21+Quiero+pagar+por+transferencia+el+Ebook+Phrasal+Verbs+%28%2412.000%29.+Alias%3A+ALINA.YL" target="_blank" rel="noopener">Pagar</a>
                 </div>
                 <div class="btn-row">
                   <a class="btn-comprar" href="https://mpago.la/2jxFuvX" target="_blank" rel="noopener">Tarjeta · $14.000</a>
@@ -920,49 +930,6 @@
             </div>
           </div>
 
-          <!-- FUTURE TENSES -->
-          <div class="product-card">
-            <div class="card-visual card-visual-ebook">
-              <img src="ebook.gif" alt="Ebook Future Tenses" />
-            </div>
-            <div class="card-body">
-              <div class="product-tag">Ebook · Tomo 3</div>
-              <div class="product-name">Future Tenses</div>
-              <ul class="features">
-                <li>Guía bilingüe (español + inglés)</li>
-                <li>Los tiempos futuros con ejemplos</li>
-                <li>Actividades + respuestas incluidas</li>
-              </ul>
-              <div class="card-actions" style="margin-top:16px;">
-                <div class="price" style="margin-bottom:4px;">$22.000 <span style="font-size:0.75rem;font-weight:400;opacity:0.6;">solo ebook</span></div>
-                <a class="btn-comprar disabled" href="#">Muy pronto</a>
-                <div class="price" style="margin-top:10px;margin-bottom:4px;">$40.000 <span style="font-size:0.75rem;font-weight:400;opacity:0.6;">incluye sesión 1:1 de 30'</span></div>
-                <a class="btn-comprar disabled" href="#">Muy pronto</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- PACK 3 EBOOKS -->
-          <div class="product-card">
-            <div class="card-visual card-visual-ebook">
-              <img src="ebook.gif" alt="Pack 3 Ebooks" />
-            </div>
-            <div class="card-body">
-              <div class="product-tag">Pack completo</div>
-              <div class="product-name">Los 3 Ebooks: Present, Past & Future Tenses</div>
-              <ul class="features">
-                <li>Los 3 tomos completos</li>
-                <li>Guías bilingües con actividades</li>
-                <li>Opción con sesión de consulta 30'</li>
-              </ul>
-              <div class="card-actions" style="margin-top:16px;">
-                <div class="price" style="margin-bottom:4px;">$58.000 <span style="font-size:0.75rem;font-weight:400;opacity:0.6;">los 3 ebooks</span></div>
-                <a class="btn-comprar disabled" href="#">Muy pronto</a>
-                <div class="price" style="margin-top:10px;margin-bottom:4px;">$76.000 <span style="font-size:0.75rem;font-weight:400;opacity:0.6;">incluye sesión 1:1 de 30'</span></div>
-                <a class="btn-comprar disabled" href="#">Muy pronto</a>
-              </div>
-            </div>
-          </div>
 
         </div>
       </div>
