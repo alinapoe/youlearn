@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recibí tu ebook — YouLearn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8f7fa;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 48px 40px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 4px 24px rgba(56,70,79,0.08);
+      text-align: center;
+    }
+    .logo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 28px;
+      display: block;
+      text-decoration: none;
+    }
+    .logo span:first-child { color: #785fb3; }
+    .logo span:last-child  { color: #00bf90; }
+    .emoji { font-size: 2.5rem; margin-bottom: 16px; display: block; }
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #38464f;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      font-size: 0.92rem;
+      color: #8a96a0;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .subtitle strong { color: #38464f; }
+    .form { display: flex; flex-direction: column; gap: 14px; text-align: left; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: 0.82rem; font-weight: 600; color: #38464f; }
+    input {
+      border: 1.5px solid #e0dde8;
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      color: #38464f;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input:focus { border-color: #785fb3; }
+    .btn-submit {
+      background: #785fb3;
+      color: white;
+      border: none;
+      border-radius: 100px;
+      padding: 15px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 6px;
+    }
+    .btn-submit:hover { background: #6a50a3; }
+    .btn-submit:disabled { background: #c8c4d4; cursor: not-allowed; }
+    .error { color: #e05c5c; font-size: 0.82rem; text-align: center; margin-top: 4px; display: none; }
+    .success { display: none; text-align: center; }
+    .success .big-check { font-size: 3rem; margin-bottom: 16px; display: block; }
+    .success h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #00bf90;
+      margin-bottom: 10px;
+    }
+    .success p { font-size: 0.9rem; color: #8a96a0; line-height: 1.6; }
+    .note {
+      margin-top: 24px;
+      font-size: 0.78rem;
+      color: #b0b8bf;
+      line-height: 1.5;
+    }
+    @media (max-width: 520px) {
+      .card { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <a class="logo" href="/"><span>You</span><span>Learn</span></a>
+
+  <div id="formSection">
+    <span class="emoji">📚</span>
+    <h1>¡Gracias por tu compra!</h1>
+    <p class="subtitle">Ingresá tu nombre y mail para recibir tu ebook de <strong>Phrasal Verbs</strong> al instante.</p>
+
+    <form class="form" id="ebookForm">
+      <div class="field">
+        <label for="name">Tu nombre</label>
+        <input type="text" id="name" placeholder="ej. María" required autocomplete="given-name">
+      </div>
+      <div class="field">
+        <label for="email">Tu email</label>
+        <input type="email" id="email" placeholder="ej. maria@gmail.com" required autocomplete="email">
+      </div>
+      <button type="submit" class="btn-submit" id="submitBtn">Recibir mi ebook →</button>
+      <p class="error" id="errorMsg">Hubo un error. Intentá de nuevo o escribinos por WhatsApp.</p>
+    </form>
+
+    <p class="note">Te llega en segundos. Si no aparece, revisá la carpeta de spam.</p>
+  </div>
+
+  <div class="success" id="successSection">
+    <span class="big-check">✅</span>
+    <h2>¡Te lo enviamos!</h2>
+    <p>Revisá tu bandeja de entrada — el ebook ya está en camino.<br>Si no llega en unos minutos, mirá en spam.</p>
+    <p style="margin-top:16px;font-size:0.82rem;color:#b0b8bf;">
+      ¿Alguna duda? Escribinos por
+      <a href="https://wa.me/541565727391" style="color:#785fb3;">WhatsApp</a>.
+    </p>
+  </div>
+</div>
+
+<script>
+  document.getElementById('ebookForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const errorMsg = document.getElementById('errorMsg');
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+    errorMsg.style.display = 'none';
+
+    try {
+      const res = await fetch('/api/send-ebook', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email }),
+      });
+
+      if (res.ok) {
+        document.getElementById('formSection').style.display = 'none';
+        document.getElementById('successSection').style.display = 'block';
+      } else {
+        throw new Error('Error del servidor');
+      }
+    } catch {
+      errorMsg.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Recibir mi ebook →';
+    }
+  });
+</script>
+</body>
+</html>
