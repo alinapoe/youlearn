@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Cuenta — YouLearn</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --purple: #785fb3;
+      --purple-light: #9b82cc;
+      --green: #00bf90;
+      --yellow: #ffcf00;
+      --charcoal: #38464f;
+      --lime: #deff83;
+      --lavender: #e5cdf9;
+      --off-white: #f5f3fb;
+      --white: #ffffff;
+      --border: #e8e2f5;
+      --text-muted: #8a8fa8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--charcoal);
+      background: var(--off-white);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ──────────────────────────────────────────────
+       LOADING STATE
+    ────────────────────────────────────────────── */
+    #app-loading {
+      position: fixed;
+      inset: 0;
+      background: var(--off-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--lavender);
+      border-top-color: var(--purple);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ──────────────────────────────────────────────
+       LOGIN SECTION
+    ────────────────────────────────────────────── */
+    #login-section {
+      display: none;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: linear-gradient(135deg, #f5f3fb 0%, #ede8f8 100%);
+    }
+
+    .login-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 48px 44px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 12px 48px rgba(120, 95, 179, 0.14);
+    }
+
+    .login-logo {
+      width: 140px;
+      margin: 0 auto 36px;
+      display: block;
+    }
+
+    .login-card h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--purple);
+      margin-bottom: 8px;
+    }
+
+    .login-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .input-email {
+      width: 100%;
+      padding: 13px 18px;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      color: var(--charcoal);
+      margin-bottom: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      background: var(--off-white);
+    }
+    .input-email:focus {
+      border-color: var(--purple);
+      background: var(--white);
+    }
+    .input-email::placeholder { color: #c0bbdd; }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--purple);
+      color: var(--white);
+      border: none;
+      padding: 14px 24px;
+      border-radius: 100px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover:not(:disabled) {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .msg-success {
+      display: none;
+      background: #edfaf5;
+      border: 1.5px solid var(--green);
+      border-radius: 14px;
+      padding: 14px 18px;
+      color: #1a7a5a;
+      font-size: 14px;
+      margin-top: 18px;
+      text-align: left;
+      line-height: 1.6;
+    }
+
+    .msg-error {
+      display: none;
+      background: #fff3f3;
+      border: 1.5px solid #f0826a;
+      border-radius: 14px;
+      padding: 14px 18px;
+      color: #b94040;
+      font-size: 14px;
+      margin-top: 18px;
+      text-align: left;
+      line-height: 1.6;
+    }
+
+    /* ──────────────────────────────────────────────
+       DASHBOARD
+    ────────────────────────────────────────────── */
+    #dashboard { display: none; }
+
+    .dash-header {
+      background: var(--white);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 16px rgba(120, 95, 179, 0.10);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .dash-logo { height: 34px; }
+
+    .btn-logout {
+      background: none;
+      border: 2px solid var(--border);
+      color: var(--text-muted);
+      padding: 7px 18px;
+      border-radius: 100px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-logout:hover {
+      border-color: var(--purple);
+      color: var(--purple);
+    }
+
+    .dash-body {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 36px 24px 60px;
+    }
+
+    .welcome-row {
+      margin-bottom: 28px;
+    }
+    .welcome-name {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+    .welcome-sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 24px 26px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 20px rgba(120, 95, 179, 0.07);
+    }
+
+    .card-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--purple);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 11px 0;
+      border-bottom: 1px solid #f2edf9;
+      font-size: 14.5px;
+    }
+    .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .info-row:first-of-type { padding-top: 0; }
+
+    .info-key { color: var(--text-muted); }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .badge-individual { background: var(--lime); color: #2d3a1e; }
+    .badge-grupal     { background: var(--lavender); color: var(--purple); }
+
+    .coming-soon {
+      color: #c5bde0;
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    /* Upload card */
+    .drop-zone {
+      border: 2px dashed var(--border);
+      border-radius: 14px;
+      padding: 32px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+      margin-bottom: 14px;
+    }
+    .drop-zone:hover, .drop-zone.over {
+      border-color: var(--purple);
+      background: #faf8ff;
+    }
+    .drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .drop-icon { font-size: 28px; margin-bottom: 8px; }
+    .drop-hint { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+    .drop-hint strong { color: var(--purple); }
+    .drop-hint span { font-size: 12px; }
+
+    .file-selected {
+      display: none;
+      font-size: 13px;
+      color: var(--green);
+      font-weight: 500;
+      margin-bottom: 14px;
+      padding: 8px 14px;
+      background: #edfaf5;
+      border-radius: 8px;
+    }
+
+    .upload-feedback {
+      display: none;
+      border-radius: 14px;
+      padding: 16px 18px;
+      font-size: 14px;
+      margin-top: 14px;
+      line-height: 1.6;
+    }
+    .upload-ok {
+      background: #edfaf5;
+      border: 1.5px solid var(--green);
+      color: #1a7a5a;
+    }
+    .upload-fail {
+      background: #fff3f3;
+      border: 1.5px solid #f0826a;
+      color: #b94040;
+    }
+
+    /* Not registered state */
+    #not-registered {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 24px;
+      text-align: center;
+    }
+    #not-registered h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--purple);
+      margin-bottom: 12px;
+    }
+    #not-registered p {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      max-width: 360px;
+      line-height: 1.6;
+    }
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #25D366;
+      color: white;
+      padding: 13px 28px;
+      border-radius: 100px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      transition: opacity 0.2s;
+    }
+    .btn-wa:hover { opacity: 0.85; }
+
+    @media (max-width: 480px) {
+      .login-card  { padding: 36px 24px; }
+      .dash-body   { padding: 24px 16px 50px; }
+      .dash-header { padding: 12px 16px; }
+      .welcome-name { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Loading -->
+<div id="app-loading">
+  <div class="spinner"></div>
+</div>
+
+<!-- ── LOGIN ───────────────────────────────────────────────────────── -->
+<section id="login-section">
+  <div class="login-card">
+    <img src="/logo.png" alt="YouLearn" class="login-logo">
+    <h1>Accedé a tu cuenta</h1>
+    <p>Ingresá tu mail y te enviamos un link para entrar. No necesitás contraseña.</p>
+
+    <input
+      type="email"
+      id="email-input"
+      class="input-email"
+      placeholder="tu@mail.com"
+      autocomplete="email"
+    >
+    <button id="send-link-btn" class="btn-primary">Enviame el link →</button>
+
+    <div id="msg-link-sent" class="msg-success">
+      ✉️ <strong>¡Link enviado!</strong><br>
+      Revisá tu bandeja de entrada y hacé click en el link para entrar.
+    </div>
+    <div id="msg-no-account" class="msg-error">
+      ⚠️ No encontramos una cuenta con ese mail. Si creés que es un error,
+      escribinos por WhatsApp.
+    </div>
+    <div id="msg-generic-error" class="msg-error">
+      ⚠️ Algo salió mal. Intentá de nuevo o escribinos por WhatsApp.
+    </div>
+  </div>
+</section>
+
+<!-- ── DASHBOARD ───────────────────────────────────────────────────── -->
+<div id="dashboard">
+  <header class="dash-header">
+    <img src="/logo.png" alt="YouLearn" class="dash-logo">
+    <button id="logout-btn" class="btn-logout">Cerrar sesión</button>
+  </header>
+
+  <div class="dash-body">
+    <div class="welcome-row">
+      <div class="welcome-name" id="welcome-name">Hola! 👋</div>
+      <div class="welcome-sub" id="welcome-sub"></div>
+    </div>
+
+    <!-- Info card -->
+    <div class="card">
+      <div class="card-label">Tu plan</div>
+      <div class="info-row">
+        <span class="info-key">Tipo de clase</span>
+        <span id="badge-class-type"></span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Clases restantes</span>
+        <span class="coming-soon">Próximamente en tu portal 🗓</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Próxima clase</span>
+        <span class="coming-soon">Próximamente en tu portal 🗓</span>
+      </div>
+    </div>
+
+    <!-- Comprobante card -->
+    <div class="card">
+      <div class="card-label">Comprobante de pago</div>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:16px;line-height:1.6">
+        ¿Renovaste tu pack? Subí el comprobante y te confirmamos las clases en tu horario habitual.
+      </p>
+
+      <div class="drop-zone" id="drop-zone">
+        <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,application/pdf">
+        <div class="drop-icon">📎</div>
+        <div class="drop-hint">
+          <strong>Elegí un archivo</strong> o arrastralo acá<br>
+          <span>JPG, PNG o PDF — máx. 10 MB</span>
+        </div>
+      </div>
+
+      <div class="file-selected" id="file-selected-label"></div>
+
+      <button class="btn-primary" id="upload-btn" disabled>Subir comprobante</button>
+
+      <div class="upload-feedback upload-ok" id="upload-ok">
+        ✅ <strong>¡Recibimos tu comprobante!</strong><br>
+        Te confirmaremos tus clases en tu horario habitual. Cualquier duda, escribinos por WhatsApp.
+      </div>
+      <div class="upload-feedback upload-fail" id="upload-fail"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── NO REGISTRADA ───────────────────────────────────────────────── -->
+<div id="not-registered" style="display:none">
+  <img src="/logo.png" alt="YouLearn" style="width:120px;margin-bottom:32px">
+  <h2>No encontramos tu cuenta</h2>
+  <p>Tu mail no está registrado como alumna activa de YouLearn. ¿Querés anotarte?</p>
+  <a href="https://wa.me/541565727391" class="btn-wa">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Escribinos por WhatsApp
+  </a>
+</div>
+
+<!-- ── SCRIPT ───────────────────────────────────────────────────────── -->
+<script>
+(function () {
+  const SUPABASE_URL = 'https://hahvbijunonpnqgaqzqn.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhhaHZiaWp1bm9ucG5xZ2FxenFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQzMDQ4ODMsImV4cCI6MjA5OTg4MDg4M30.L24zItglbH9pQHzKt6KRYTA7fHK63-EBVKy4rnxm0YI';
+
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  let currentStudent = null;
+  let selectedFile   = null;
+
+  // ── Helpers ──────────────────────────────────────────────────────
+  function show(id, flex) {
+    const el = document.getElementById(id);
+    el.style.display = flex ? 'flex' : 'block';
+  }
+  function hide(id) { document.getElementById(id).style.display = 'none'; }
+  function hideAll() {
+    ['login-section', 'dashboard', 'not-registered'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+  }
+  function hideLoading() { hide('app-loading'); }
+
+  // ── Auth init ────────────────────────────────────────────────────
+  async function init() {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) {
+      await loadDashboard(session.user);
+    } else {
+      hideLoading();
+      show('login-section', true);
+    }
+  }
+
+  // React to auth events (magic link click)
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_IN' && session) {
+      await loadDashboard(session.user);
+    } else if (event === 'SIGNED_OUT') {
+      hideAll();
+      hideLoading();
+      show('login-section', true);
+    }
+  });
+
+  // ── Login flow ───────────────────────────────────────────────────
+  const sendBtn = document.getElementById('send-link-btn');
+  const emailInput = document.getElementById('email-input');
+
+  emailInput.addEventListener('keypress', e => {
+    if (e.key === 'Enter') sendBtn.click();
+  });
+
+  sendBtn.addEventListener('click', async () => {
+    const email = emailInput.value.trim().toLowerCase();
+    if (!email || !email.includes('@')) return;
+
+    ['msg-link-sent','msg-no-account','msg-generic-error'].forEach(id => hide(id));
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Verificando...';
+
+    // Check if email exists in students table first
+    const { data: student, error: lookupErr } = await sb
+      .from('students')
+      .select('email')
+      .eq('email', email)
+      .maybeSingle();
+
+    if (lookupErr || !student) {
+      show('msg-no-account');
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Enviame el link →';
+      return;
+    }
+
+    const { error } = await sb.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: window.location.href }
+    });
+
+    if (error) {
+      show('msg-generic-error');
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Enviame el link →';
+    } else {
+      show('msg-link-sent');
+      sendBtn.textContent = 'Link enviado ✓';
+    }
+  });
+
+  // ── Dashboard ────────────────────────────────────────────────────
+  async function loadDashboard(user) {
+    const email = user.email.trim().toLowerCase();
+
+    const { data: student, error } = await sb
+      .from('students')
+      .select('*')
+      .eq('email', email)
+      .maybeSingle();
+
+    hideLoading();
+
+    if (error || !student) {
+      hideAll();
+      show('not-registered', true);
+      return;
+    }
+
+    currentStudent = student;
+
+    const firstName = student.name.split(' ')[0];
+    document.getElementById('welcome-name').textContent = `Hola, ${firstName}! 👋`;
+    document.getElementById('welcome-sub').textContent = student.email;
+
+    const badge = document.getElementById('badge-class-type');
+    badge.textContent   = student.class_type;
+    badge.className     = 'badge ' + (student.class_type === 'Individual' ? 'badge-individual' : 'badge-grupal');
+
+    hideAll();
+    show('dashboard');
+  }
+
+  // ── Logout ───────────────────────────────────────────────────────
+  document.getElementById('logout-btn').addEventListener('click', async () => {
+    await sb.auth.signOut();
+  });
+
+  // ── File selection ───────────────────────────────────────────────
+  const fileInput = document.getElementById('file-input');
+  const dropZone  = document.getElementById('drop-zone');
+
+  fileInput.addEventListener('change', e => {
+    if (e.target.files[0]) handleFile(e.target.files[0]);
+  });
+
+  dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('over');
+    if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  });
+
+  function handleFile(file) {
+    if (file.size > 10 * 1024 * 1024) {
+      alert('El archivo es demasiado grande. El límite es 10 MB.');
+      return;
+    }
+    selectedFile = file;
+    const label = document.getElementById('file-selected-label');
+    label.textContent  = '📎 ' + file.name;
+    label.style.display = 'block';
+    document.getElementById('upload-btn').disabled = false;
+    hide('upload-ok');
+    hide('upload-fail');
+  }
+
+  // ── Upload ───────────────────────────────────────────────────────
+  document.getElementById('upload-btn').addEventListener('click', async () => {
+    if (!selectedFile || !currentStudent) return;
+
+    const btn = document.getElementById('upload-btn');
+    btn.disabled    = true;
+    btn.textContent = 'Subiendo...';
+    hide('upload-ok');
+    hide('upload-fail');
+
+    try {
+      const ext      = selectedFile.name.split('.').pop().toLowerCase();
+      const safeMail = currentStudent.email.replace(/[@.]/g, '_');
+      const fileName = `${safeMail}_${Date.now()}.${ext}`;
+
+      // 1. Upload file to Supabase Storage
+      const { error: uploadError } = await sb.storage
+        .from('comprobantes')
+        .upload(fileName, selectedFile, { cacheControl: '3600', upsert: false });
+
+      if (uploadError) throw uploadError;
+
+      // 2. Generate signed URL (valid 7 days) for Alina's email
+      const { data: signedData } = await sb.storage
+        .from('comprobantes')
+        .createSignedUrl(fileName, 60 * 60 * 24 * 7);
+
+      const fileUrl = signedData?.signedUrl || '';
+
+      // 3. Insert record in DB
+      await sb.from('comprobante_submissions').insert({
+        student_email: currentStudent.email,
+        student_name:  currentStudent.name,
+        class_type:    currentStudent.class_type,
+        file_path:     fileName,
+        file_url:      fileUrl
+      });
+
+      // 4. Notify Alina (best-effort — don't fail the UX if this fails)
+      fetch('/api/notify-comprobante', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          studentName:  currentStudent.name,
+          studentEmail: currentStudent.email,
+          classType:    currentStudent.class_type,
+          fileUrl
+        })
+      }).catch(() => {/* silent — notification is non-blocking */});
+
+      // 5. Success UX
+      show('upload-ok');
+      document.getElementById('file-selected-label').style.display = 'none';
+      btn.textContent = '✓ Enviado';
+      selectedFile = null;
+
+    } catch (err) {
+      console.error('Upload error:', err);
+      const failEl = document.getElementById('upload-fail');
+      failEl.textContent = '⚠️ Hubo un error al subir el archivo. Intentá de nuevo o escribinos por WhatsApp.';
+      show('upload-fail');
+      btn.disabled    = false;
+      btn.textContent = 'Subir comprobante';
+    }
+  });
+
+  // ── Start ────────────────────────────────────────────────────────
+  init();
+})();
+</script>
+</body>
+</html>
