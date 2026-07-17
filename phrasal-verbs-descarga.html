@@ -139,30 +139,49 @@
 </div>
 
 <script>
+  async function sendEbook(name, email) {
+    const res = await fetch('/api/send-ebook', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email }),
+    });
+    return res.ok;
+  }
+
+  function showSuccess() {
+    document.getElementById('formSection').style.display = 'none';
+    document.getElementById('successSection').style.display = 'block';
+  }
+
+  // Si vienen de la página de checkout, ya tenemos el mail — enviar automático
+  window.addEventListener('DOMContentLoaded', async () => {
+    const savedName  = localStorage.getItem('yl_ebook_name');
+    const savedEmail = localStorage.getItem('yl_ebook_email');
+    if (savedName && savedEmail) {
+      localStorage.removeItem('yl_ebook_name');
+      localStorage.removeItem('yl_ebook_email');
+      const ok = await sendEbook(savedName, savedEmail);
+      if (ok) { showSuccess(); return; }
+    }
+    // Fallback: mostrar formulario manual
+  });
+
+  // Formulario manual (fallback si no hay datos guardados)
   document.getElementById('ebookForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = document.getElementById('submitBtn');
+    const btn      = document.getElementById('submitBtn');
     const errorMsg = document.getElementById('errorMsg');
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
+    const name     = document.getElementById('name').value.trim();
+    const email    = document.getElementById('email').value.trim();
 
     btn.disabled = true;
     btn.textContent = 'Enviando...';
     errorMsg.style.display = 'none';
 
     try {
-      const res = await fetch('/api/send-ebook', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email }),
-      });
-
-      if (res.ok) {
-        document.getElementById('formSection').style.display = 'none';
-        document.getElementById('successSection').style.display = 'block';
-      } else {
-        throw new Error('Error del servidor');
-      }
+      const ok = await sendEbook(name, email);
+      if (ok) { showSuccess(); }
+      else { throw new Error(); }
     } catch {
       errorMsg.style.display = 'block';
       btn.disabled = false;
