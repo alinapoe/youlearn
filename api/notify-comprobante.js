@@ -1,4 +1,4 @@
-<export default async function handler(req, res) {
+export default async function handler(req, res) {
   // CORS headers (in case called from browser directly)
   res.setHeader('Access-Control-Allow-Origin', 'https://www.youlearnba.com');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
