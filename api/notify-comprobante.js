@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+<export default async function handler(req, res) {
   // CORS headers (in case called from browser directly)
   res.setHeader('Access-Control-Allow-Origin', 'https://www.youlearnba.com');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
-  const RESEND_API_KEY = process.env.RESEND_API_KEY;
+  const RESEND_API_KEY = process.env.youlearnportal;
   if (!RESEND_API_KEY) {
     console.error('[notify-comprobante] RESEND_API_KEY not configured');
     return res.status(500).json({ error: 'Email service not configured' });
