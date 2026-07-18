@@ -39,6 +39,10 @@ export default async function handler(req, res) {
           filename: `comprobante_${studentName.replace(/\s+/g, '_')}.${ext}`,
           content: base64
         }];
+      } else {
+        // Antes esto fallaba en silencio: el mail se mandaba igual pero sin
+        // adjunto y sin ningún rastro del motivo. Ahora queda en los logs de Vercel.
+        console.error(`[notify-comprobante] fileUrl fetch failed: ${fileRes.status} ${fileRes.statusText} — ${fileUrl}`);
       }
     } catch (e) {
       console.error('[notify-comprobante] Could not attach comprobante:', e);

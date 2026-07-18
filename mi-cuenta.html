@@ -652,7 +652,13 @@
     try {
       const ext      = selectedFile.name.split('.').pop().toLowerCase();
       const safeMail = currentStudent.email.replace(/[@.]/g, '_');
-      const fileName = `${safeMail}_${Date.now()}.${ext}`;
+      // IMPORTANTE: el archivo va DENTRO de una carpeta con el mail de la
+      // alumna (safeMail/...), porque la política de lectura (RLS) del bucket
+      // "comprobantes" exige que el primer segmento de la ruta coincida con
+      // el mail del usuario autenticado. Con un nombre plano (sin carpeta),
+      // createSignedUrl() fallaba en silencio y el mail a Alina llegaba sin
+      // el comprobante adjunto ni el link para verlo.
+      const fileName = `${safeMail}/${Date.now()}.${ext}`;
 
       // 1. Upload file to Supabase Storage
       const { error: uploadError } = await sb.storage
@@ -662,9 +668,13 @@
       if (uploadError) throw uploadError;
 
       // 2. Generate signed URL (valid 7 days) for Alina's email
-      const { data: signedData } = await sb.storage
+      const { data: signedData, error: signError } = await sb.storage
         .from('comprobantes')
         .createSignedUrl(fileName, 60 * 60 * 24 * 7);
+
+      if (signError) {
+        console.error('createSignedUrl error:', signError);
+      }
 
       const fileUrl = signedData?.signedUrl || '';
 
