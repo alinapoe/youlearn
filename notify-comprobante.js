@@ -101,7 +101,7 @@ export default async function handler(req, res) {
 
   try {
     const emailBody = {
-      from: 'YouLearn <onboarding@resend.dev>',
+      from: 'YouLearn <hola@youlearnba.com>',
       to: ['alina.pouyau@gmail.com'],
       subject: `📎 Comprobante de ${studentName}`,
       html,
