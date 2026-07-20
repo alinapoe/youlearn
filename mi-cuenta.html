@@ -328,6 +328,31 @@
       color: #b94040;
     }
 
+    /* Progress bar */
+    .progress-track { height: 8px; background: var(--off-white); border-radius: 100px; overflow: hidden; margin-top: 8px; }
+    .progress-fill { height: 100%; background: var(--green); border-radius: 100px; }
+    .progress-label { font-size: 12.5px; color: var(--text-muted); margin-top: 6px; }
+    .expiration-note { font-size: 12.5px; color: var(--text-muted); margin-top: 10px; padding-top: 10px; border-top: 1px solid #f2edf9; }
+    .expiration-note strong { color: var(--charcoal); }
+
+    /* Reprogramar card */
+    .resched-status { font-size: 13.5px; color: var(--text-muted); margin-bottom: 14px; }
+    .resched-status strong { color: var(--purple); }
+    .btn-secondary {
+      width: 100%; background: #fff; color: var(--purple); border: 2px solid var(--border);
+      padding: 12px 24px; border-radius: 100px; font-family: 'Poppins', sans-serif; font-size: 14px;
+      font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; display: block;
+      margin-bottom: 10px; transition: border-color .2s;
+    }
+    .btn-secondary:hover { border-color: var(--purple); }
+    .btn-confirm-resched {
+      width: 100%; background: none; color: var(--text-muted); border: none;
+      padding: 8px; font-family: 'Poppins', sans-serif; font-size: 12.5px; text-decoration: underline;
+      cursor: pointer;
+    }
+    .btn-confirm-resched:disabled { opacity: .5; cursor: not-allowed; text-decoration: none; }
+    .resched-empty { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; }
+
     /* Not registered state */
     #not-registered {
       display: none;
@@ -431,14 +456,18 @@
         <span class="info-key">Tipo de clase</span>
         <span id="badge-class-type"></span>
       </div>
-      <div class="info-row">
-        <span class="info-key">Clases restantes</span>
-        <span class="coming-soon">Próximamente en tu portal 🗓</span>
+      <div id="progress-wrap" style="display:none">
+        <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+        <div class="progress-label" id="progress-label"></div>
+        <div class="expiration-note" id="expiration-note" style="display:none"></div>
       </div>
-      <div class="info-row">
-        <span class="info-key">Próxima clase</span>
-        <span class="coming-soon">Próximamente en tu portal 🗓</span>
-      </div>
+      <div id="progress-empty" class="coming-soon">Todavía no tenés un pack activo registrado</div>
+    </div>
+
+    <!-- Reprogramar card -->
+    <div class="card" id="resched-card" style="display:none">
+      <div class="card-label">Reprogramar clase</div>
+      <div id="resched-content"></div>
     </div>
 
     <!-- Comprobante card -->
@@ -491,6 +520,7 @@
 
   let currentStudent = null;
   let selectedFile   = null;
+  let currentToken   = null;
 
   // ── Helpers ──────────────────────────────────────────────────────
   function show(id, flex) {
@@ -509,6 +539,7 @@
   async function init() {
     const { data: { session } } = await sb.auth.getSession();
     if (session) {
+      currentToken = session.access_token;
       await loadDashboard(session.user);
     } else {
       hideLoading();
@@ -519,6 +550,7 @@
   // React to auth events (magic link click)
   sb.auth.onAuthStateChange(async (event, session) => {
     if (event === 'SIGNED_IN' && session) {
+      currentToken = session.access_token;
       await loadDashboard(session.user);
     } else if (event === 'SIGNED_OUT') {
       hideAll();
@@ -602,6 +634,111 @@
 
     hideAll();
     show('dashboard');
+
+    loadPortalData();
+  }
+
+  // ── Progreso / vencimiento / reprogramación ────────────────────────
+  const DAY_LABELS = { 0: 'domingo', 1: 'lunes', 2: 'martes', 3: 'miércoles', 4: 'jueves', 5: 'viernes', 6: 'sábado' };
+
+  function fmtDateEs(iso) {
+    const d = new Date(iso + 'T00:00:00');
+    return d.toLocaleDateString('es-AR', { day: '2-digit', month: 'long', year: 'numeric' });
+  }
+
+  async function loadPortalData() {
+    if (!currentToken) return;
+    try {
+      const res = await fetch('/api/student-portal-data', {
+        headers: { Authorization: `Bearer ${currentToken}` }
+      });
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      renderProgress(data);
+      renderReschedule(data);
+    } catch (e) {
+      console.error('No se pudo cargar el progreso:', e);
+    }
+  }
+
+  function renderProgress(data) {
+    const wrap  = document.getElementById('progress-wrap');
+    const empty = document.getElementById('progress-empty');
+
+    if (!data.currentPack || !data.progress) {
+      wrap.style.display = 'none';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+    wrap.style.display = 'block';
+
+    const { classesGiven, packClasses } = data.progress;
+    const pct = Math.round((classesGiven / packClasses) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-label').textContent =
+      `Clase ${classesGiven} de ${packClasses} (aprox.)`;
+
+    const expEl = document.getElementById('expiration-note');
+    if (data.expiration) {
+      expEl.style.display = 'block';
+      expEl.innerHTML = `Tu pack vence el <strong>${fmtDateEs(data.expiration.date)}</strong>` +
+        (data.expiration.estimated ? ' (estimado — todavía no tenemos cargado tu día de clase fijo)' : '');
+    } else {
+      expEl.style.display = 'none';
+    }
+  }
+
+  function renderReschedule(data) {
+    const card = document.getElementById('resched-card');
+    const content = document.getElementById('resched-content');
+
+    if (!data.currentPack || !data.reschedules) {
+      card.style.display = 'none';
+      return;
+    }
+    card.style.display = 'block';
+
+    if (!data.bookingLink) {
+      content.innerHTML = `<p class="resched-empty">Todavía no tenemos cargado con qué profe tomás clase. Escribinos por WhatsApp si necesitás reprogramar.</p>`;
+      return;
+    }
+
+    const { used, allowed, remaining } = data.reschedules;
+    const dayLabel = data.schedule?.day_of_week ? ` (tu horario habitual: ${data.schedule.day_of_week}${data.schedule.time ? ' ' + data.schedule.time : ''})` : '';
+
+    if (remaining <= 0) {
+      content.innerHTML = `
+        <p class="resched-status">Ya usaste tus <strong>${allowed} de ${allowed}</strong> reprogramaciones de este pack.</p>
+        <p class="resched-empty">Si necesitás mover una clase igual, escribinos por WhatsApp y lo vemos.</p>
+      `;
+      return;
+    }
+
+    content.innerHTML = `
+      <p class="resched-status">Te quedan <strong>${remaining} de ${allowed}</strong> reprogramaciones en este pack${dayLabel}.</p>
+      <a class="btn-secondary" href="${data.bookingLink}" target="_blank" rel="noopener">Elegir nuevo horario →</a>
+      <button class="btn-confirm-resched" id="confirm-resched-btn">Ya reprogramé mi clase</button>
+    `;
+
+    document.getElementById('confirm-resched-btn').addEventListener('click', async (e) => {
+      const btn = e.target;
+      btn.disabled = true;
+      btn.textContent = 'Guardando...';
+      try {
+        const res = await fetch('/api/student-reschedule', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${currentToken}` }
+        });
+        const result = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(result.error || 'Error');
+        await loadPortalData();
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Ya reprogramé mi clase';
+        alert('No se pudo registrar la reprogramación. Probá de nuevo o escribinos por WhatsApp.');
+      }
+    });
   }
 
   // ── Logout ───────────────────────────────────────────────────────

@@ -53,6 +53,27 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Error al actualizar en base de datos' });
     }
 
+    // Pack nuevo aprobado → resetea el contador de reprogramaciones a 0.
+    // merge-duplicates para no pisar día/hora/profe ya cargados en class_schedule.
+    const resetRes = await fetch(`${SUPABASE_URL}/rest/v1/class_schedule`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify({
+        student_email: email,
+        reschedules_used: 0,
+        updated_at: new Date().toISOString()
+      })
+    });
+    if (!resetRes.ok) {
+      console.error('[admin-aprobar] Could not reset reschedules_used:', await resetRes.text());
+      // No cortamos el flujo por esto — el pack ya quedó aprobado igual.
+    }
+
     console.log(`[admin-aprobar] Approved: ${email} → ${packType} x${classes}`);
     return res.status(200).json({ ok: true });
 

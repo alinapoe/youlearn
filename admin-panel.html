@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de control — YouLearn Admin</title>
+<link rel="icon" href="/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple: #785fb3;
+  --green: #00bf90;
+  --yellow: #ffcf00;
+  --charcoal: #38464f;
+  --lime: #deff83;
+  --lavender: #e5cdf9;
+  --off-white: #f5f3fb;
+  --border: #e8e2f5;
+  --text-muted: #8a8fa8;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--off-white);
+  color: var(--charcoal);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── GATE ── */
+#gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #f5f3fb 0%, #ede8f8 100%);
+}
+.gate-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 44px 40px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 12px 48px rgba(120,95,179,.14);
+}
+.gate-card img { width: 120px; margin-bottom: 28px; }
+.gate-card h1 { font-size: 19px; font-weight: 700; color: var(--purple); margin-bottom: 20px; }
+.gate-card input {
+  width: 100%; padding: 12px 16px; border: 2px solid var(--border);
+  border-radius: 12px; font-family: 'Poppins', sans-serif; font-size: 15px;
+  margin-bottom: 12px; outline: none; background: var(--off-white);
+}
+.gate-card input:focus { border-color: var(--purple); background: #fff; }
+.gate-error { display: none; color: #b94040; font-size: 13px; margin-top: 10px; }
+
+/* ── BUTTONS ── */
+.btn {
+  border: none; border-radius: 100px; font-family: 'Poppins', sans-serif;
+  font-weight: 600; cursor: pointer; transition: opacity .2s, transform .1s;
+}
+.btn:hover:not(:disabled) { opacity: .88; transform: translateY(-1px); }
+.btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.btn-primary { background: var(--purple); color: #fff; padding: 12px 22px; font-size: 14px; }
+.btn-small { padding: 7px 16px; font-size: 12.5px; }
+.btn-outline { background: #fff; color: var(--purple); border: 1.5px solid var(--border); }
+.btn-outline:hover { border-color: var(--purple); }
+
+/* ── APP ── */
+#app { display: none; }
+header.top {
+  background: #fff; padding: 14px 28px; display: flex; align-items: center;
+  justify-content: space-between; box-shadow: 0 2px 16px rgba(120,95,179,.10);
+  position: sticky; top: 0; z-index: 50;
+}
+header.top img { height: 32px; }
+.top-right { display: flex; align-items: center; gap: 14px; }
+.top-right span { font-size: 12px; font-weight: 600; color: var(--purple); background: var(--lavender); padding: 3px 10px; border-radius: 100px; letter-spacing: .04em; text-transform: uppercase; }
+
+.main { max-width: 780px; margin: 0 auto; padding: 28px 20px 60px; }
+.search-input {
+  width: 100%; padding: 12px 16px; border: 2px solid var(--border);
+  border-radius: 12px; font-family: 'Poppins', sans-serif; font-size: 14px;
+  margin-bottom: 20px; outline: none; background: #fff;
+}
+.search-input:focus { border-color: var(--purple); }
+
+.stats-row { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+.stat-chip { background: #fff; border-radius: 12px; padding: 10px 18px; font-size: 13px; box-shadow: 0 2px 10px rgba(120,95,179,.06); }
+.stat-chip b { color: var(--purple); font-size: 16px; display: block; }
+
+.student-card {
+  background: #fff; border-radius: 18px; padding: 20px 22px; margin-bottom: 14px;
+  box-shadow: 0 4px 20px rgba(120,95,179,.06);
+}
+.student-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.student-name { font-size: 16px; font-weight: 700; }
+.student-email { font-size: 12.5px; color: var(--text-muted); }
+.badge { display: inline-block; padding: 3px 11px; border-radius: 100px; font-size: 11.5px; font-weight: 600; }
+.badge-individual { background: var(--lime); color: #2d3a1e; }
+.badge-grupal { background: var(--lavender); color: var(--purple); }
+
+.pack-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; flex-wrap: wrap; }
+.pack-info { font-size: 13.5px; }
+.pack-info .none { color: var(--text-muted); font-style: italic; }
+.progress-track { flex: 1; min-width: 120px; height: 8px; background: var(--off-white); border-radius: 100px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--green); border-radius: 100px; }
+.progress-label { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+
+.schedule-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; font-size: 13.5px; }
+.schedule-row input {
+  padding: 7px 10px; border: 1.5px solid var(--border); border-radius: 8px;
+  font-family: 'Poppins', sans-serif; font-size: 13px; outline: none; width: 130px;
+}
+.schedule-row input:focus { border-color: var(--purple); }
+
+.card-actions-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+
+.history-panel, .payment-form {
+  display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid #f2edf9;
+}
+.history-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 0; border-bottom: 1px solid #f8f6fc; font-size: 13px; gap: 10px;
+}
+.history-item:last-child { border-bottom: none; }
+.history-source { font-size: 10.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.form-grid label { font-size: 11.5px; color: var(--text-muted); display: block; margin-bottom: 4px; }
+.form-grid input, .form-grid select {
+  width: 100%; padding: 9px 11px; border: 1.5px solid var(--border); border-radius: 8px;
+  font-family: 'Poppins', sans-serif; font-size: 13.5px; outline: none;
+}
+.form-grid input:focus, .form-grid select:focus { border-color: var(--purple); }
+.form-full { grid-column: 1 / -1; }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: var(--charcoal); color: #fff; padding: 12px 22px; border-radius: 100px;
+  font-size: 13.5px; box-shadow: 0 6px 24px rgba(0,0,0,.2); display: none; z-index: 200;
+}
+.toast.error { background: #b94040; }
+
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+
+@media (max-width: 480px) {
+  .form-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── GATE ── -->
+<div id="gate">
+  <div class="gate-card">
+    <img src="/logo.png" alt="YouLearn">
+    <h1>Panel de control — Admin</h1>
+    <input type="password" id="gate-input" placeholder="Contraseña">
+    <button class="btn btn-primary" id="gate-btn" style="width:100%">Entrar</button>
+    <div class="gate-error" id="gate-error">⚠️ Contraseña incorrecta.</div>
+  </div>
+</div>
+
+<!-- ── APP ── -->
+<div id="app">
+  <header class="top">
+    <img src="/logo.png" alt="YouLearn">
+    <div class="top-right">
+      <span>Admin</span>
+      <button class="btn btn-outline btn-small" id="logout-btn">Salir</button>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="stats-row" id="stats-row"></div>
+    <input type="text" class="search-input" id="search-input" placeholder="Buscar por nombre o mail...">
+    <div id="students-list"></div>
+    <div class="empty-state" id="empty-state" style="display:none">No se encontraron alumnas.</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  const KEY_STORAGE = 'yl_admin_key';
+  let allStudents = [];
+
+  // ── Toast ──────────────────────────────────────────────────────
+  function toast(msg, isError) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast' + (isError ? ' error' : '');
+    t.style.display = 'block';
+    setTimeout(() => { t.style.display = 'none'; }, 3200);
+  }
+
+  // ── Gate ───────────────────────────────────────────────────────
+  const gate = document.getElementById('gate');
+  const app  = document.getElementById('app');
+
+  async function tryKey(key) {
+    const res = await fetch(`/api/admin-students?key=${encodeURIComponent(key)}`);
+    if (res.status === 401) return false;
+    if (!res.ok) { toast('Error al cargar los datos.', true); return false; }
+    const data = await res.json();
+    allStudents = data.students || [];
+    return true;
+  }
+
+  document.getElementById('gate-btn').addEventListener('click', async () => {
+    const key = document.getElementById('gate-input').value.trim();
+    if (!key) return;
+    const btn = document.getElementById('gate-btn');
+    btn.disabled = true;
+    btn.textContent = 'Verificando...';
+    const ok = await tryKey(key);
+    btn.disabled = false;
+    btn.textContent = 'Entrar';
+    if (ok) {
+      sessionStorage.setItem(KEY_STORAGE, key);
+      gate.style.display = 'none';
+      app.style.display = 'block';
+      render();
+    } else {
+      document.getElementById('gate-error').style.display = 'block';
+    }
+  });
+  document.getElementById('gate-input').addEventListener('keypress', e => {
+    if (e.key === 'Enter') document.getElementById('gate-btn').click();
+  });
+
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    sessionStorage.removeItem(KEY_STORAGE);
+    app.style.display = 'none';
+    gate.style.display = 'flex';
+    document.getElementById('gate-input').value = '';
+  });
+
+  function getKey() { return sessionStorage.getItem(KEY_STORAGE); }
+
+  // ── Render ─────────────────────────────────────────────────────
+  function fmtDate(d) {
+    if (!d) return '—';
+    return new Date(d).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+  function fmtMoney(amount, currency) {
+    if (amount == null) return '';
+    return `${currency === 'USD' ? 'USD ' : '$'}${Number(amount).toLocaleString('es-AR')}`;
+  }
+
+  function renderStats(list) {
+    const withPack = list.filter(s => s.currentPack).length;
+    document.getElementById('stats-row').innerHTML = `
+      <div class="stat-chip"><b>${list.length}</b>Alumnas activas</div>
+      <div class="stat-chip"><b>${withPack}</b>Con pack registrado</div>
+    `;
+  }
+
+  function studentCard(s) {
+    const badgeClass = s.classType === 'Individual' ? 'badge-individual' : 'badge-grupal';
+    const pack = s.currentPack;
+
+    let packHtml = `<div class="pack-info"><span class="none">Sin pagos registrados</span></div>`;
+    if (pack) {
+      const pct = s.progress ? Math.round((s.progress.classesGiven / s.progress.packClasses) * 100) : 0;
+      packHtml = `
+        <div class="pack-info"><strong>${pack.pack_type}</strong> · ${pack.pack_classes} clases</div>
+        ${s.progress ? `
+          <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+          <div class="progress-label">Clase ${s.progress.classesGiven} de ${s.progress.packClasses} (aprox.)</div>
+        ` : ''}
+      `;
+    }
+
+    const sched = s.schedule || {};
+    const history = s.paymentHistory || [];
+
+    return `
+      <div class="student-card" data-email="${s.email}">
+        <div class="student-top">
+          <div>
+            <div class="student-name">${s.name}</div>
+            <div class="student-email">${s.email}</div>
+          </div>
+          <span class="badge ${badgeClass}">${s.classType}</span>
+        </div>
+
+        <div class="pack-row">${packHtml}</div>
+
+        <div class="schedule-row">
+          📅
+          <select class="sched-teacher">
+            <option value="">Profe...</option>
+            <option value="Ali" ${sched.teacher === 'Ali' ? 'selected' : ''}>Ali</option>
+            <option value="Anto" ${sched.teacher === 'Anto' ? 'selected' : ''}>Anto</option>
+            <option value="Sil" ${sched.teacher === 'Sil' ? 'selected' : ''}>Sil</option>
+          </select>
+          <input type="text" placeholder="Día (ej: Lunes)" class="sched-day" value="${sched.day_of_week || ''}">
+          <input type="text" placeholder="Hora (ej: 18:00)" class="sched-time" value="${sched.time || ''}">
+          <button class="btn btn-outline btn-small sched-save">Guardar horario</button>
+        </div>
+        ${sched.reschedules_used != null ? `<div class="schedule-row" style="font-size:12px;color:var(--text-muted)">🔁 Reprogramaciones usadas en este pack: ${sched.reschedules_used}</div>` : ''}
+
+        <div class="card-actions-row">
+          <button class="btn btn-outline btn-small toggle-history">Ver historial (${history.length})</button>
+          <button class="btn btn-outline btn-small toggle-payment">+ Agregar pago manual</button>
+        </div>
+
+        <div class="history-panel">
+          ${history.length ? history.map(h => `
+            <div class="history-item">
+              <div>
+                <div>${h.pack_type || '—'} · ${h.pack_classes || '—'} clases</div>
+                <div class="history-source">${h.source}${h.method ? ' · ' + h.method : ''}</div>
+              </div>
+              <div style="text-align:right">
+                <div>${fmtDate(h.date)}</div>
+                <div style="color:var(--text-muted);font-size:12px">${fmtMoney(h.amount, h.currency)}</div>
+              </div>
+            </div>
+          `).join('') : '<p style="font-size:13px;color:var(--text-muted)">Sin pagos registrados todavía.</p>'}
+        </div>
+
+        <div class="payment-form">
+          <div class="form-grid">
+            <div>
+              <label>Fecha</label>
+              <input type="date" class="pf-date" value="${new Date().toISOString().slice(0,10)}">
+            </div>
+            <div>
+              <label>Método</label>
+              <select class="pf-method">
+                <option>Transferencia</option>
+                <option>MercadoPago</option>
+                <option>PayPal</option>
+                <option>Efectivo</option>
+                <option>Otro</option>
+              </select>
+            </div>
+            <div>
+              <label>Tipo de pack</label>
+              <select class="pf-type">
+                <option value="Individual">Individual</option>
+                <option value="Grupal">Grupal</option>
+              </select>
+            </div>
+            <div>
+              <label>Cantidad de clases</label>
+              <select class="pf-classes">
+                <option value="4">4</option>
+                <option value="8">8</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+            <div>
+              <label>Monto</label>
+              <input type="number" class="pf-amount" placeholder="Ej: 116000">
+            </div>
+            <div>
+              <label>Moneda</label>
+              <select class="pf-currency">
+                <option value="ARS">ARS</option>
+                <option value="USD">USD</option>
+              </select>
+            </div>
+            <div class="form-full">
+              <label>Notas (opcional)</label>
+              <input type="text" class="pf-notes" placeholder="Ej: avisó por WhatsApp">
+            </div>
+          </div>
+          <button class="btn btn-primary btn-small pf-save">Guardar pago</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function render() {
+    renderStats(allStudents);
+    renderList(allStudents);
+  }
+
+  function renderList(list) {
+    const container = document.getElementById('students-list');
+    const empty = document.getElementById('empty-state');
+    if (!list.length) {
+      container.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+    container.innerHTML = list.map(studentCard).join('');
+    attachCardHandlers();
+  }
+
+  function attachCardHandlers() {
+    document.querySelectorAll('.student-card').forEach(card => {
+      const email = card.dataset.email;
+
+      card.querySelector('.toggle-history').addEventListener('click', () => {
+        const panel = card.querySelector('.history-panel');
+        panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+      });
+
+      card.querySelector('.toggle-payment').addEventListener('click', () => {
+        const panel = card.querySelector('.payment-form');
+        panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+      });
+
+      card.querySelector('.sched-save').addEventListener('click', async () => {
+        const day     = card.querySelector('.sched-day').value.trim();
+        const time    = card.querySelector('.sched-time').value.trim();
+        const teacher = card.querySelector('.sched-teacher').value;
+        const btn  = card.querySelector('.sched-save');
+        btn.disabled = true;
+        try {
+          const res = await fetch('/api/admin-schedule', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ key: getKey(), email, dayOfWeek: day, time, teacher })
+          });
+          if (!res.ok) throw new Error();
+          toast('Horario guardado ✓');
+        } catch {
+          toast('No se pudo guardar el horario.', true);
+        }
+        btn.disabled = false;
+      });
+
+      card.querySelector('.pf-save').addEventListener('click', async () => {
+        const date     = card.querySelector('.pf-date').value;
+        const method   = card.querySelector('.pf-method').value;
+        const packType = card.querySelector('.pf-type').value;
+        const classes  = card.querySelector('.pf-classes').value;
+        const amount   = card.querySelector('.pf-amount').value;
+        const currency = card.querySelector('.pf-currency').value;
+        const notes    = card.querySelector('.pf-notes').value.trim();
+        const btn      = card.querySelector('.pf-save');
+
+        btn.disabled = true;
+        btn.textContent = 'Guardando...';
+        try {
+          const res = await fetch('/api/admin-payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              key: getKey(), email, amount: amount ? Number(amount) : null,
+              currency, method, packType, packClasses: Number(classes),
+              paymentDate: date, notes
+            })
+          });
+          if (!res.ok) throw new Error();
+          toast('Pago agregado ✓');
+          const ok = await tryKey(getKey());
+          if (ok) renderList(filterCurrent());
+        } catch {
+          toast('No se pudo guardar el pago.', true);
+        }
+        btn.disabled = false;
+        btn.textContent = 'Guardar pago';
+      });
+    });
+  }
+
+  function filterCurrent() {
+    const q = document.getElementById('search-input').value.trim().toLowerCase();
+    if (!q) return allStudents;
+    return allStudents.filter(s =>
+      s.name.toLowerCase().includes(q) || s.email.toLowerCase().includes(q)
+    );
+  }
+
+  document.getElementById('search-input').addEventListener('input', () => {
+    renderList(filterCurrent());
+  });
+
+  // ── Auto-login si ya hay key guardada ─────────────────────────
+  (async function init() {
+    const saved = getKey();
+    if (saved) {
+      const ok = await tryKey(saved);
+      if (ok) {
+        gate.style.display = 'none';
+        app.style.display = 'block';
+        render();
+        return;
+      }
+    }
+    gate.style.display = 'flex';
+  })();
+})();
+</script>
+</body>
+</html>
