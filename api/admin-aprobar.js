@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aprobar Pack — YouLearn Admin</title>
+<link rel="icon" href="/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple: #785fb3;
+  --green: #00bf90;
+  --yellow: #ffcf00;
+  --charcoal: #38464f;
+  --lime: #deff83;
+  --lavender: #e5cdf9;
+  --off-white: #f5f3fb;
+  --border: #e8e2f5;
+  --text-muted: #8a8fa8;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--off-white);
+  color: var(--charcoal);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+header {
+  background: #fff;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 16px rgba(120,95,179,.10);
+}
+header img { height: 32px; }
+header span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--purple);
+  background: var(--lavender);
+  padding: 3px 10px;
+  border-radius: 100px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.container {
+  max-width: 560px;
+  margin: 36px auto;
+  padding: 0 20px 60px;
+}
+h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--charcoal);
+  margin-bottom: 4px;
+}
+.subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+.card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px 26px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 20px rgba(120,95,179,.07);
+}
+.card-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--purple);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 16px;
+}
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f2edf9;
+  font-size: 14px;
+}
+.info-row:last-child { border-bottom: none; }
+.info-key { color: var(--text-muted); font-size: 13px; }
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.badge-ind { background: var(--lime); color: #2d3a1e; }
+.badge-gru { background: var(--lavender); color: var(--purple); }
+
+/* Comprobante preview */
+.comprobante-preview {
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.comprobante-preview img {
+  width: 100%;
+  display: block;
+  max-height: 400px;
+  object-fit: contain;
+  background: #fafafa;
+}
+.comprobante-pdf-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--purple);
+  text-decoration: none;
+  background: var(--off-white);
+  border-radius: 12px;
+}
+.comprobante-pdf-link:hover { background: var(--lavender); }
+
+/* Pack selection */
+.option-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.option-btn {
+  flex: 1;
+  min-width: 80px;
+  padding: 12px 16px;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--charcoal);
+  cursor: pointer;
+  text-align: center;
+  transition: all .18s;
+}
+.option-btn:hover { border-color: var(--purple); color: var(--purple); }
+.option-btn.selected {
+  border-color: var(--purple);
+  background: var(--purple);
+  color: #fff;
+}
+.option-btn.selected-green {
+  border-color: var(--green);
+  background: var(--green);
+  color: #fff;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--charcoal);
+  margin-bottom: 10px;
+}
+
+/* Approve button */
+.btn-approve {
+  width: 100%;
+  background: var(--purple);
+  color: #fff;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 100px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .2s, transform .1s;
+  margin-top: 8px;
+  letter-spacing: .01em;
+}
+.btn-approve:hover:not(:disabled) { opacity: .88; transform: translateY(-1px); }
+.btn-approve:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+/* States */
+.state-success {
+  display: none;
+  background: #edfaf5;
+  border: 1.5px solid var(--green);
+  border-radius: 16px;
+  padding: 24px 26px;
+  text-align: center;
+}
+.state-success .tick { font-size: 40px; margin-bottom: 12px; }
+.state-success h2 { font-size: 18px; font-weight: 700; color: #1a7a5a; margin-bottom: 6px; }
+.state-success p { font-size: 14px; color: #2a9a6a; }
+
+.state-error {
+  display: none;
+  background: #fff3f3;
+  border: 1.5px solid #f0826a;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 14px;
+  color: #b94040;
+  margin-top: 14px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="/logo.png" alt="YouLearn">
+  <span>Admin</span>
+</header>
+
+<div class="container">
+  <h1>Aprobar pack 📦</h1>
+  <p class="subtitle">Revisá el comprobante y seleccioná el pack antes de confirmar.</p>
+
+  <!-- Student info -->
+  <div class="card">
+    <div class="card-label">Alumna</div>
+    <div class="info-row">
+      <span class="info-key">Nombre</span>
+      <span id="student-name" style="font-weight:600">—</span>
+    </div>
+    <div class="info-row">
+      <span class="info-key">Mail</span>
+      <span id="student-email" style="font-size:13px">—</span>
+    </div>
+    <div class="info-row">
+      <span class="info-key">Tipo de clase</span>
+      <span id="student-tipo">—</span>
+    </div>
+  </div>
+
+  <!-- Comprobante -->
+  <div class="card">
+    <div class="card-label">Comprobante</div>
+    <div id="comprobante-wrap">
+      <p style="font-size:14px;color:var(--text-muted)">No hay comprobante adjunto.</p>
+    </div>
+  </div>
+
+  <!-- Pack selection -->
+  <div class="card" id="approval-card">
+    <div class="card-label">Seleccioná el pack</div>
+
+    <div class="section-title">Tipo</div>
+    <div class="option-group" id="tipo-group">
+      <button class="option-btn" data-value="Individual" onclick="selectTipo(this)">Individual</button>
+      <button class="option-btn" data-value="Grupal" onclick="selectTipo(this)">Grupal</button>
+    </div>
+
+    <div style="margin-top:20px">
+      <div class="section-title">Cantidad de clases</div>
+      <div class="option-group" id="clases-group">
+        <button class="option-btn" data-value="4" onclick="selectClases(this)">4</button>
+        <button class="option-btn" data-value="8" onclick="selectClases(this)">8</button>
+        <button class="option-btn" data-value="12" onclick="selectClases(this)">12</button>
+      </div>
+    </div>
+
+    <div style="margin-top:24px">
+      <button class="btn-approve" id="approve-btn" disabled onclick="aprobar()">
+        ✅ Confirmar aprobación
+      </button>
+      <div class="state-error" id="error-msg"></div>
+    </div>
+  </div>
+
+  <!-- Success state -->
+  <div class="state-success" id="success-card">
+    <div class="tick">✅</div>
+    <h2>Pack aprobado</h2>
+    <p id="success-detail">—</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  // Read URL params
+  const p = new URLSearchParams(window.location.search);
+  const email  = p.get('email')  || '';
+  const nombre = p.get('nombre') || '';
+  const tipo   = p.get('tipo')   || '';
+  const file   = p.get('file')   || '';
+
+  // Populate student info
+  document.getElementById('student-name').textContent  = nombre || '—';
+  document.getElementById('student-email').textContent = email  || '—';
+
+  const tipoEl = document.getElementById('student-tipo');
+  if (tipo) {
+    const isInd = tipo === 'Individual';
+    tipoEl.innerHTML = `<span class="badge ${isInd ? 'badge-ind' : 'badge-gru'}">${tipo}</span>`;
+  }
+
+  // Pre-select tipo based on student's class_type
+  if (tipo === 'Individual' || tipo === 'Grupal') {
+    const btn = document.querySelector(`#tipo-group [data-value="${tipo}"]`);
+    if (btn) selectTipo(btn);
+  }
+
+  // Comprobante preview
+  const wrap = document.getElementById('comprobante-wrap');
+  if (file) {
+    const isPdf = file.toLowerCase().includes('.pdf') || file.toLowerCase().includes('pdf');
+    if (isPdf) {
+      wrap.innerHTML = `<a href="${file}" target="_blank" class="comprobante-pdf-link">
+        📄 Ver PDF del comprobante →
+      </a>`;
+    } else {
+      wrap.innerHTML = `<div class="comprobante-preview">
+        <img src="${file}" alt="Comprobante" onerror="this.parentElement.innerHTML='<p style=padding:20px;color:var(--text-muted);font-size:14px>No se pudo cargar la imagen. <a href=\'${file}\' target=\'_blank\'>Abrir en nueva pestaña →</a></p>'">
+      </div>`;
+    }
+  }
+
+  // State
+  window._selectedTipo   = null;
+  window._selectedClases = null;
+
+  function checkReady() {
+    document.getElementById('approve-btn').disabled =
+      !window._selectedTipo || !window._selectedClases;
+  }
+
+  window.selectTipo = function (btn) {
+    document.querySelectorAll('#tipo-group .option-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    window._selectedTipo = btn.dataset.value;
+    checkReady();
+  };
+
+  window.selectClases = function (btn) {
+    document.querySelectorAll('#clases-group .option-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    window._selectedClases = parseInt(btn.dataset.value);
+    checkReady();
+  };
+
+  window.aprobar = async function () {
+    const btn = document.getElementById('approve-btn');
+    const errEl = document.getElementById('error-msg');
+    btn.disabled = true;
+    btn.textContent = 'Aprobando...';
+    errEl.style.display = 'none';
+
+    try {
+      const res = await fetch('/api/admin-aprobar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          packType: window._selectedTipo,
+          classes: window._selectedClases
+        })
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Error ${res.status}`);
+      }
+
+      // Success
+      document.getElementById('approval-card').style.display = 'none';
+      const successCard = document.getElementById('success-card');
+      successCard.style.display = 'block';
+      document.getElementById('success-detail').textContent =
+        `${nombre} — ${window._selectedTipo}, ${window._selectedClases} clases.`;
+
+    } catch (err) {
+      errEl.textContent = '⚠️ ' + err.message;
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = '✅ Confirmar aprobación';
+    }
+  };
+})();
+</script>
+</body>
+</html>
