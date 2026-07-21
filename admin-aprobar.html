@@ -299,12 +299,6 @@ h1 {
     tipoEl.innerHTML = `<span class="badge ${isInd ? 'badge-ind' : 'badge-gru'}">${tipo}</span>`;
   }
 
-  // Pre-select tipo based on student's class_type
-  if (tipo === 'Individual' || tipo === 'Grupal') {
-    const btn = document.querySelector(`#tipo-group [data-value="${tipo}"]`);
-    if (btn) selectTipo(btn);
-  }
-
   // Comprobante preview
   const wrap = document.getElementById('comprobante-wrap');
   if (file) {
@@ -342,6 +336,14 @@ h1 {
     window._selectedClases = parseInt(btn.dataset.value);
     checkReady();
   };
+
+  // Pre-select tipo based on student's class_type
+  // (debe ir DESPUES de definir selectTipo arriba, si no tira ReferenceError
+  // y corta la ejecucion del resto del script — los botones quedaban muertos)
+  if (tipo === 'Individual' || tipo === 'Grupal') {
+    const preBtn = document.querySelector(`#tipo-group [data-value="${tipo}"]`);
+    if (preBtn) selectTipo(preBtn);
+  }
 
   window.aprobar = async function () {
     const btn = document.getElementById('approve-btn');
