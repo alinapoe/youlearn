@@ -51,7 +51,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'YouLearn <onboarding@resend.dev>',
+        from: process.env.RESEND_FROM || 'YouLearn <onboarding@resend.dev>',
         to: [email],
         subject: '¡Tu ebook de Phrasal Verbs ya está listo! 📚',
         html,
